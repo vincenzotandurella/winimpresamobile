@@ -1,0 +1,59 @@
+package com.winimpresa.mobile;
+
+import java.io.IOException;
+
+import com.winimpresa.mobile.utility.GlobalConstants;
+import com.winimpresa.mobile.utility.ReadXmlUser;
+import com.winimpresa.mobile.utility.User;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+
+public class ActivityBase extends Activity{
+	protected  User user;
+	
+	
+	    protected void onCreate(Bundle savedInstanceState, int layoutId) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(layoutId);
+	        this.readUser();
+	    }
+	    
+	    
+	    
+	    
+	   //Leggo il file per le informazione de 
+	   private void readUser(){
+		   
+		    try {
+				ReadXmlUser xmlUser = new	ReadXmlUser(getAssets().open(GlobalConstants.nameInfoUser));
+				user = xmlUser.readInfoUser();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   } 
+	   
+	   
+	   @Override
+		public void finish() {
+			super.finish();
+			
+		}
+
+		@Override
+		protected void onStop() {
+			super.onStop();
+			
+		}
+
+		@Override
+		protected void onDestroy() {
+			super.onDestroy();
+		
+		}
+	    
+
+}

@@ -1,0 +1,219 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context="com.winimpresa.mobile.BuonoActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="#fff"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelNote"
+                    android:textColor="#fff" />
+
+                <EditText
+                    android:id="@+id/noteIntervento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#fff"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="@string/labelTimeStart"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/oraInizio"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="center" />
+
+                    <ImageButton
+                        android:id="@+id/buttonOraInizio"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0"
+                        android:background="@layout/style_button_addbuono"
+                        android:contentDescription="@string/labelTimeStart"
+                        android:src="@android:drawable/ic_lock_idle_alarm" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#fff"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="@string/labelTimeEnd"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/oraFine"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="center" />
+
+                    <ImageButton
+                        android:id="@+id/buttonOraFine"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10sp"
+                        android:layout_weight="0"
+                        android:background="@layout/style_button_addbuono"
+                        android:contentDescription="@string/labelTimeEnd"
+                        android:src="@android:drawable/ic_lock_idle_alarm" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:hint="@string/labelReports"
+                    android:textColor="#fff" />
+
+                <EditText
+                    android:id="@+id/segnalzioni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:hint="@string/labelMotor"
+                    android:textColor="#fff" />
+
+                <Spinner
+                    android:id="@+id/motorTarg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/targhe"
+                    android:gravity="start"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:hint="@string/labelComunication"
+                    android:textColor="#fff" />
+
+                <EditText
+                    android:id="@+id/counicazioneOperatore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:hint="@string/labelAndam"
+                    android:textColor="#fff" />
+
+                <Spinner
+                    android:id="@+id/andamLavori"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/andam"
+                    android:gravity="start"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_weight="0"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/settori"
+            android:text="Settori (2)" 
+            android:background="@layout/pressed_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+          <Button
+            android:id="@+id/settori"
+            android:text="Magazzino" 
+            android:background="@layout/pressed_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+            
+    </LinearLayout>
+
+</LinearLayout>

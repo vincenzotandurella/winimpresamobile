@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/b"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="#fff"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="vertical" >
+
+            <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelSettore"
+                    android:textColor="#fff" />
+           
+             <EditText
+                   android:id="@+id/settore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:enabled="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+            <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelErogatore"
+                    android:textColor="#fff" />
+           
+             <EditText
+                   android:id="@+id/erogatore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:enabled="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+          
+             
+             <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelCodDisp"
+                    android:textColor="#fff" />
+           
+             <EditText
+                   android:id="@+id/codDisp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:enabled="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+             
+                   <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelSiglaDisp"
+                    android:textColor="#fff" />
+           
+             <EditText
+                   android:id="@+id/siglaDisp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:enabled="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+              <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelAttivita"
+                    android:textColor="#fff" />
+           
+             <EditText
+                   android:id="@+id/attivita"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:enabled="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+             
+             
+              <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelStatoEsca"
+                    android:textColor="#fff" />
+           
+             <EditText
+                   android:id="@+id/statoEsca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:enabled="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+             
+                  <TextView
+                   android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left"
+                    android:hint="@string/labelProdottoSost"
+                    android:textColor="#fff" />
+           
+               <Spinner
+                    android:id="@+id/prodottoSost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/prodotti"
+                    android:gravity="start"
+                    android:textSize="13sp" />
+       
+            
+            
+           </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

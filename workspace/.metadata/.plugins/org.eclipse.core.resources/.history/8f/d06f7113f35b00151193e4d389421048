@@ -1,0 +1,53 @@
+package com.winimpresa.mobile.utility;
+
+import java.io.IOException;
+
+import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+
+public class User {
+
+	private  String idUser;
+	private String fullName;
+	private Activity activity;
+	private FragmentActivity frangment;
+	
+	public User (Activity activity,FragmentActivity fragmentActivity,User us){
+		
+		this.readInfoUser(us,activity);
+		
+	}
+	
+	public  void setIdUser(String idUser ){
+		this.idUser = idUser;
+		
+	}
+	
+	public String getIdUser() {
+		return idUser;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
+	private void readInfoUser(User us, Activity acti){
+		
+		   try {
+				ReadXmlUser xmlUser = new	ReadXmlUser(acti.getAssets().open("info_user.xml"));
+				us = xmlUser.readInfoUser();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+	
+}

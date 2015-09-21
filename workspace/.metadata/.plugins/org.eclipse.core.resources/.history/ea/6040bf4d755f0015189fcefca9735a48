@@ -1,0 +1,36 @@
+package com.winimpresa.mobile.utility;
+
+import com.winimpresa.interfaces.ActivityInterface;
+import com.winimpresa.mobile.ActivityBase;
+
+import android.support.v4.app.DialogFragment;
+
+
+public class FireMissilesDialogFragment extends DialogFragment {
+    private   ActivityInterface test ;
+	
+	public FireMissilesDialogFragment(ActivityBase att){
+    	
+    	test = att;
+    }
+	
+	@Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Vuoi uscire?")
+               .setPositiveButton("si", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       // FIRE ZE MISSILES!
+                	   test.cambiaAttivita();
+                   }
+               })
+               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       // User cancelled the dialog
+                   }
+               });
+        // Create the AlertDialog object and return it
+        return builder.create();
+    }
+}

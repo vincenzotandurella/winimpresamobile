@@ -1,0 +1,78 @@
+package com.winimpresa.mobile.utility;
+
+import java.io.InputStream;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+public class ReadXmlUser {
+	
+	private InputStream fileXML;
+	private User us;
+	private String text;
+	
+	
+	public ReadXmlUser(){
+		
+	}
+	
+	
+	public User readInfoUser(){
+		XmlPullParserFactory factory = null;
+        XmlPullParser parser = null;
+        try {
+            factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            parser = factory.newPullParser();
+ 
+            parser.setInput(fileXML, null);
+ 
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tagname = parser.getName();
+                switch (eventType) {
+                case XmlPullParser.START_TAG:
+                    if (tagname.equalsIgnoreCase("info")) {
+                        
+                    	us = new User();
+                    }
+                    break;
+ 
+                case XmlPullParser.TEXT:
+                    text = parser.getText();
+                    break;
+ 
+                case XmlPullParser.END_TAG:
+                    if (tagname.equalsIgnoreCase("employee")) {
+                        // add employee object to list
+                        employees.add(employee);
+                    } else if (tagname.equalsIgnoreCase("name")) {
+                        employee.setName(text);
+                    } else if (tagname.equalsIgnoreCase("id")) {
+                        employee.setId(Integer.parseInt(text));
+                    } else if (tagname.equalsIgnoreCase("department")) {
+                        employee.setDepartment(text);
+                    } else if (tagname.equalsIgnoreCase("email")) {
+                        employee.setEmail(text);
+                    } else if (tagname.equalsIgnoreCase("type")) {
+                        employee.setType(text);
+                    }
+                    break;
+ 
+                default:
+                    break;
+                }
+                eventType = parser.next();
+            }
+ 
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+        return employees;
+    }
+	}
+
+}

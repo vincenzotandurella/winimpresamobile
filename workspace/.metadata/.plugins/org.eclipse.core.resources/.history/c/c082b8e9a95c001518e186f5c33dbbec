@@ -1,0 +1,11 @@
+package com.winimpresa.mobile.utility;
+
+public class Buoni {
+	
+	private String titolo;
+	private int tipologia;
+	
+	
+	public Buono
+
+}

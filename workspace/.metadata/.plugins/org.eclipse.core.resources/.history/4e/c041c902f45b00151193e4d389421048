@@ -1,0 +1,20 @@
+package com.winimpresa.mobile;
+
+n;
+
+
+
+import android.app.Activity;
+import android.os.Bundle;
+
+
+public class ActivityBase extends Activity{
+	
+
+	    protected void onCreate(Bundle savedInstanceState, int layoutId) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(layoutId);
+	     
+	    }
+
+}

@@ -1,0 +1,112 @@
+package com.winimpresa.mobile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
+import com.winimpresa.mobile.utility.Buono;
+
+import android.app.ActionBar;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+
+public class BuoniActivity extends ActivityBase {
+private ListView listBuoni;
+private ArrayList<HashMap<String, Object>> dataBuoni ;
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState, R.layout.activity_buoni);
+		
+		ActionBar ab = getActionBar();
+		ab.setTitle(getResources().getString(R.string.listBuoni));
+		ab.setSubtitle(user.getFullName() + " / "+user.getIdUser());
+		getActionBar().setDisplayShowHomeEnabled(false);
+		
+		
+		
+		ArrayList<Buono> buoniList=new ArrayList<Buono>();
+        
+		Buono [] buoni = {
+							new Buono (" Buono con rosso"  ,1,R.drawable.init),
+							new Buono (" Buono con verde"  ,1,R.drawable.finish),
+							new Buono (" Buono con arancio",1,R.drawable.inter)
+						  };
+		
+	
+		
+		Random r=new Random();
+	        for(int i=0;i<30;i++){
+	        	buoniList.add(buoni[r.nextInt(buoni.length)]);
+	        }
+	       
+	        dataBuoni = new ArrayList<HashMap<String,Object>>();
+		
+	   
+			   for(int i=0;i<buoniList.size();i++){
+		           Buono b=buoniList.get(i);
+		           
+		           HashMap<String,Object> buoniMap=new HashMap<String, Object>();
+		           
+		           buoniMap.put("status",b.getStatus()); 
+		           buoniMap.put("titolo", b.getTitolo()); 
+		           buoniMap.put("tipologia",b.getTipologia());
+		           dataBuoni.add(buoniMap); 
+			   		}
+	     String[] from={"status","titolo","tipologia"};
+	     
+	     int[] to={R.id.status,R.id.titolo,R.id.tipologia};
+	     
+	     SimpleAdapter adapter=new SimpleAdapter(
+                 getApplicationContext(),
+                 dataBuoni,
+                 R.layout.buono, 
+                 from,
+                 to);
+	     
+	     listBuoni =  (ListView) findViewById(R.id.buoniListView);
+	     listBuoni.setAdapter(adapter);
+	     
+	     
+	    
+	     
+	}
+	
+	
+	public void addNewBuono(View view){
+		 Buono test = new Buono("Buono nuovo", 10, R.drawable.init);
+	     HashMap<String,Object> buoniMap2=new HashMap<String, Object>();
+	     buoniMap2.put("status",test.getStatus()); 
+         buoniMap2.put("titolo", test.getTitolo()); 
+         buoniMap2.put("tipologia",test.getTipologia());
+	     
+         dataBuoni.add(buoniMap2);
+	     adapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.buoni, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}
