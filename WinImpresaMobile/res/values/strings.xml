@@ -23,7 +23,6 @@
     <string name="labelSi">Si</string>
     <string name="labelMessaggeControlSaveBuono"> Hai salvato prima di tornare alla lista ? </string>
     <string name="labelSave">Salva</string>
-
     <string name="labelSettore">Settore</string>
     <string name="labelErogatore">Erogatore</string>
     <string name="labelCodDisp">Cod. Disp.</string>
@@ -31,10 +30,23 @@
     <string name="labelAttivita">Attività</string>
     <string name="labelStatoEsca">Stato esca</string>
     <string name="labelProdottoSost">Prodotto sostituito</string>
-        <string name="labelMessaggeControlSaveSettore"> Hai salvato prima di tornare alle Notizie buono ? </string>
-    
-    
-    
+    <string name="labelMessaggeControlSaveSettore"> Hai salvato prima di tornare alle Notizie buono ? </string>
+    <string name="labelSyncWithInternet">Sincronizza con interent</string>
+    <string name="labelSyncWithLocal">Sincronizza con USB</string>
+    <string name="labelSuccessSave">Dati salvati con successo</string>
+    <string name="labelErrorSave">Errore salvataggio dati</string>
+    <string name="labelMontData">Data</string>
+    <string name="labelMontSigla">Sigla</string>
+    <string name="labelMontDesc">Descrizione</string>
+    <string name="labelMontCliente">Cliente</string>
+    <string name="labelMontNCommessa">N° Commessa</string>
+    <string name="labelMontComune">Comune</string>
+    <string name="labelMontArea">Area</string>
+    <string name="labelMontNumero">Monit. n°</string>
+    <string name="labelDispositivi">Dispositivi</string>
+    <string name="labelAmbiente">Ambiente</string>
+    <string name="labelTipoDisp">Tipo Disp.</string>
+
     <string-array name="targhe">
         <item>XXXX-00</item>
         <item>XXXX-01</item>
@@ -47,8 +59,7 @@
         <item>Mediocre</item>
         <item>Insufficiente</item>
     </string-array>
-    
-     <string-array name="prodotti">
+    <string-array name="prodotti">
         <item>Prodotto 1</item>
         <item>Prodotto 2</item>
         <item>Prodotto 3</item>
@@ -56,8 +67,7 @@
 
     <string name="title_activity_settori">Settori</string>
     <string name="hello_world">Hello world!</string>
-    
-        <string name="app_picker_name">Applications</string>
+    <string name="app_picker_name">Applications</string>
     <string name="bookmark_picker_name">Bookmarks</string>
     <string name="button_add_calendar">Add to calendar</string>
     <string name="button_add_contact">Add contact</string>
@@ -174,5 +184,7 @@
     <string name="wifi_changing_network">Requesting connection to network\u2026</string>
     <string name="wifi_ssid_label">Network Name</string>
     <string name="wifi_type_label">Type</string>
+    <string name="title_activity_dispositivi_list">Lista dispositivi</string>
+    <string name="title_activity_scheda">SchedaActivity</string>
 
 </resources>

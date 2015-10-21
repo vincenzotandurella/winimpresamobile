@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.winimpresa.mobile.utility.Buono;
+import com.winimpresa.mobile.database.MonitoraggioTable;
+import com.winimpresa.mobile.to.Buono;
+import com.winimpresa.mobile.to.Monitoraggio;
+import com.winimpresa.mobile.utility.GlobalConstants;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -26,7 +29,7 @@ private static final String TAG_LOG = MainActivity.class.getName();
 private ListView listBuoni;
 private ArrayList<HashMap<String, Object>> dataBuoni ;
 private  SimpleAdapter adapter;
-private ArrayList<Buono> buoniList = new ArrayList<Buono>();
+private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,40 +40,34 @@ private ArrayList<Buono> buoniList = new ArrayList<Buono>();
 		ab.setTitle(getResources().getString(R.string.listBuoni));
 		ab.setSubtitle(user.getFullName() + " / "+user.getIdUser());
 		getActionBar().setDisplayShowHomeEnabled(false);
+		//logout();
 		
-		
-		
-		
+		MonitoraggioTable mont = new MonitoraggioTable(context, db);
+		monitoriaggioList = mont.selectAllMonitoraggio(monitoriaggioList);
         
-		Buono [] buoni = {
-							new Buono (" Buono con rosso"  ,1,R.drawable.init),
-							new Buono (" Buono con verde"  ,1,R.drawable.finish),
-							new Buono (" Buono con arancio",1,R.drawable.inter)
-						  };
-		
 	
-		
-		Random r=new Random();
-	        for(int i=0;i<30;i++){
-	        	buoniList.add(buoni[r.nextInt(buoni.length)]);
-	        }
 	       
 	        dataBuoni = new ArrayList<HashMap<String,Object>>();
 		
 	   
-			   for(int i=0;i<buoniList.size();i++){
-		           Buono b=buoniList.get(i);
+			   for(int i=0;i<monitoriaggioList.size();i++){
+		           Monitoraggio mtg= monitoriaggioList.get(i);
 		           
 		           HashMap<String,Object> buoniMap=new HashMap<String, Object>();
 		           
-		           buoniMap.put("status",b.getStatus()); 
-		           buoniMap.put("titolo", b.getTitolo()); 
-		           buoniMap.put("tipologia",b.getTipologia());
+		           buoniMap.put("ev",mtg.getEvaso()); 
+		           buoniMap.put("data", mtg.getData()); 
+		           buoniMap.put("sigla",mtg.getSigla());
+		           buoniMap.put("descrizione",mtg.getDescrizione());
+		           buoniMap.put("cliente",mtg.getCliente());
+		           buoniMap.put("commessa",mtg.getCommessa_n());
+		           buoniMap.put("comune",mtg.getCitta());
+		           buoniMap.put("area",mtg.getArea());
 		           dataBuoni.add(buoniMap); 
 			   		}
-	     String[] from={"status","titolo","tipologia"};
+	     String[] from={"ev","data","sigla","descrizione","cliente","commessa","comune","area"};
 	     
-	     int[] to={R.id.status,R.id.titolo,R.id.tipologia};
+	     int[] to={R.id.ev,R.id.data,R.id.sigla,R.id.descrizione,R.id.cliente,R.id.commessa,R.id.comune,R.id.area};
 	     
 	     adapter =new SimpleAdapter(
                  getApplicationContext(),
@@ -88,18 +85,13 @@ private ArrayList<Buono> buoniList = new ArrayList<Buono>();
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					// TODO Auto-generated method stub
-					/*HashMap<String,Object> buono = dataBuoni.get(0);
-					
-					buono.put("titolo", "Modificato");
-					dataBuoni.set(0, buono);
-					*/
-					Log.d(TAG_LOG,"Element selected "+ buoniList.get(position).getTitolo());
+			
+					 Log.d(TAG_LOG,"Element selected "+ monitoriaggioList.get(position).getId_monitoraggio());
 					 Intent page_buono= new Intent(context, BuonoActivity.class);
-				     /* page.putExtra("TIPO", mList.get(position).tipo_attivita);
-				      page.putExtra("ID_ATTIVITA", mList.get(position).id);
-				      page.putExtra("POSITION_ARRAY",position);
-				      startActivityForResult(page,20);
-					*/
+					 page_buono.putExtra(GlobalConstants.IDBUONO, monitoriaggioList.get(position).getId_monitoraggio());
+					
+				    //  startActivityForResult(page_buono,20);
+					
 					 startActivity(page_buono);
 					 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 				}
@@ -110,27 +102,26 @@ private ArrayList<Buono> buoniList = new ArrayList<Buono>();
    
 	
 	public void addNewBuono(View view){
-		 Buono newBuono = new Buono("Buono nuovo", 10, R.drawable.init);
+		showToast("Funzionalià ancora non disponibile");
+		
+		/* Buono newBuono = new Buono("Buono nuovo", 10, R.drawable.init);
 	     HashMap<String,Object> buoniMap2=new HashMap<String, Object>();
 	     buoniMap2.put("status",newBuono.getStatus()); 
          buoniMap2.put("titolo", newBuono.getTitolo()); 
          buoniMap2.put("tipologia",newBuono.getTipologia());
-         buoniList.add(newBuono);
+         monitoriaggioList.add(newBuono);
          dataBuoni.add(buoniMap2);
 	     adapter.notifyDataSetChanged();
 	     //listBuoni.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 	     listBuoni.smoothScrollToPosition(dataBuoni.size());
 	     showToast(getResources().getString(R.string.msgSuccessBuono));
-	     
+	     */
 	     
 	
 	}
 	
 	
-	public void showToast(String msg) {
-		Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-		t.show();
-	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

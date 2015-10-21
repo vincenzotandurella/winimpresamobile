@@ -1,8 +1,8 @@
 package com.winimpresa.mobile.utility;
 
-import com.winimpresa.interfaces.ActivityInterface;
 import com.winimpresa.mobile.ActivityBase;
 import com.winimpresa.mobile.R;
+import com.winimpresa.mobile.interfaces.ActivityInterface;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

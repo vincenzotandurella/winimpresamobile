@@ -1,40 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:padding="5dip"
-         android:background="@layout/pressed_list"
-        >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:padding="10dip" >
 
-
+    
         <ImageView
-                android:id="@+id/status"
-                android:layout_width="30dip"
-                android:layout_height="30dip"
-        >
-        </ImageView>
+            android:id="@+id/ev"
+            android:layout_alignParentRight="true"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+             />
+        
+        
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical" >
 
+   
 
-        <TextView
-                android:text="titolo"
-                android:layout_marginLeft="5dip"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/titolo"
-                android:layout_toRightOf="@id/status"
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
-        <TextView
-                android:text="tipologia"
-                android:textSize="12sp"
-                android:textColor="#6b71f1"
-                android:id="@+id/tipologia"
-                android:layout_alignLeft="@+id/titolo"
-                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Data :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-        </TextView>
-        
-        
-        
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Sigla :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/sigla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Descrizione :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/descrizione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Cliente :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/cliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="N° Commessa :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/commessa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Comune :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/comune"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Area :"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+        </TableLayout>
+           <ImageView
+            android:layout_gravity="center"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            
+            android:src="@drawable/edit" />
+    </LinearLayout>
+     
 </RelativeLayout>

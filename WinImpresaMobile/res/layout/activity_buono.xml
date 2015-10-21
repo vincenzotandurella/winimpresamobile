@@ -26,6 +26,71 @@
                 android:background="#fff"
                 android:orientation="vertical" >
 
+                
+               <TableLayout 
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   
+                   <TableRow
+                      android:layout_height="wrap_content"
+                      android:layout_width="match_parent" 
+                       >
+                    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="@string/labelMontNCommessa"
+                    android:textColor="#fff" />
+                     
+                    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/numeroCommessa"
+                    android:layout_weight="1"
+                    android:textColor="#000" />
+                    
+                    
+                        <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textStyle="normal|italic"
+                    android:id="@+id/dataMon"
+                    android:textColor="#000" />
+                  
+                    </TableRow>
+                   
+                   
+                   <TableRow
+                      android:layout_height="wrap_content"
+                      android:layout_width="match_parent" 
+                       >
+                    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="@string/labelMontNumero"
+                    android:textColor="#fff" />
+                     
+                    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:id="@+id/monitoraggioNumero"
+                    android:textColor="#000" />
+                    
+                    
+                      <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/tipo"
+                    android:textColor="#000" />
+                    
+                       
+                   </TableRow>
+                   
+                   
+               </TableLayout> 
+                
+                
+                
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -125,7 +190,7 @@
                     android:textColor="#fff" />
 
                 <EditText
-                    android:id="@+id/segnalzioni"
+                    android:id="@+id/segnalazioni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_style"
@@ -137,22 +202,72 @@
                     android:textColor="#000"
                     android:textSize="13sp" />
 
-                <TextView
+                
+
+               <TableLayout 
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   >
+                    
+                   <TableRow 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    
+                   <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
+                     android:layout_weight="1"
                     android:gravity="left"
                     android:hint="@string/labelMotor"
                     android:textColor="#fff" />
-
-                <Spinner
-                    android:id="@+id/motorTarg"
+                    
+                    <TextView
+                    
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="60dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="left"
+                    android:hint="Km"
+                    android:textColor="#fff" />
+                    
+                </TableRow>
+                <TableRow 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/targhe"
+                    >
+                    
+                    <EditText
+                    android:id="@+id/automezzo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_style"
                     android:gravity="start"
+                    android:padding="10dp"
+                    android:textColor="#000"
+                    android:inputType="text"
                     android:textSize="13sp" />
+                    
+                     <EditText
+                    android:id="@+id/km"
+                    android:layout_width="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_style"
+                    android:inputType="number"
+                    android:gravity="start"
+                    android:padding="10dp"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+                    
+                </TableRow>
 
+                
+              </TableLayout> 
+                  
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -162,7 +277,7 @@
                     android:textColor="#fff" />
 
                 <EditText
-                    android:id="@+id/counicazioneOperatore"
+                    android:id="@+id/comunicazioneOperatore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_style"
@@ -201,7 +316,7 @@
 
         <Button
             android:id="@+id/settori"
-            android:text="Settori (2)" 
+            android:text="" 
             android:background="@layout/pressed_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

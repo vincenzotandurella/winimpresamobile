@@ -2,6 +2,7 @@ package com.winimpresa.mobile;
 
 import java.util.Calendar;
 
+import com.winimpresa.mobile.to.MonitoriaggioVoci;
 import com.winimpresa.mobile.utility.DialogGlobalBack;
 
 import android.app.ActionBar;
@@ -46,7 +47,7 @@ public class SettoriActivity extends ActivityBase {
 		ab.setIcon( new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 		ab.setSubtitle(user.getFullName() + " / "+user.getIdUser());
 		
-		
+	
 		
 		 viewFlipper   = (ViewFlipper) findViewById(R.id.viewflipper);
 	     avanti        = (Button) findViewById(R.id.avanti);
