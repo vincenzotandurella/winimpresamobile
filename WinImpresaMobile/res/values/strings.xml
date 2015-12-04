@@ -55,9 +55,10 @@
         <item>XXXX-04</item>
     </string-array>
     <string-array name="andam">
+          <item></item>
+        <item>Ottimo</item>
         <item>Soddisfacente</item>
-        <item>Mediocre</item>
-        <item>Insufficiente</item>
+        <item>Insoddisfacente</item>
     </string-array>
     <string-array name="prodotti">
         <item>Prodotto 1</item>
@@ -186,5 +187,6 @@
     <string name="wifi_type_label">Type</string>
     <string name="title_activity_dispositivi_list">Lista dispositivi</string>
     <string name="title_activity_scheda">SchedaActivity</string>
+    <string name="title_activity_rilascio">Fine lavoro</string>
 
 </resources>

@@ -8,18 +8,212 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.winimpresa.mobile.DispositiviListActivity" >
 
-      <ListView
+    <ListView
         android:id="@+id/listViewDispositivi"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:alpha="255"
+       
         android:background="#ccc"
         android:cacheColorHint="#00000000"
         android:choiceMode="singleChoice"
-       	android:divider="@null"
-		android:dividerHeight="0dp"
-         
-        >
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:longClickable="true" >
     </ListView>
+
+    <View 
+        android:id="@+id/black"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#000"
+        android:alpha="0.0"
+        android:visibility="invisible"
+        />
+    
+    <LinearLayout
+        android:id="@+id/dettaglioDispositivo"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.0"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:padding="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="left"
+                        android:hint="Ambiente"
+                        android:textColor="#fff" />
+
+                    <EditText
+                        android:id="@+id/ambiente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="#000"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:hint="Settore"
+                        android:textColor="#fff" />
+
+                    <EditText
+                        android:id="@+id/settore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="#000"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:hint="Tipo Dispositivo"
+                        android:textColor="#fff" />
+
+                    <EditText
+                        android:id="@+id/tipoDisp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="#000"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:hint="Codice Dispositivo"
+                        android:textColor="#fff" />
+
+                    <EditText
+                        android:id="@+id/codDisp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="#000"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:hint="Sigla Dispositivo"
+                        android:textColor="#fff" />
+
+                    <EditText
+                        android:id="@+id/siglaDisp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="#000"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="55dp"
+            android:layout_weight="0"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/salva"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/pressed_button"
+                android:drawableLeft="@drawable/ic_action_save"
+                android:text="Salva modifica"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#fff" />
+
+            <Button
+                android:id="@+id/qrcode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/pressed_button"
+                android:drawableLeft="@drawable/qrcode_scan_mini"
+                android:text="Visualizza dettagli"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+            
+             <Button
+                android:id="@+id/goscheda"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/pressed_button"
+                android:visibility="gone"
+                android:text="Visualizza dettagli"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

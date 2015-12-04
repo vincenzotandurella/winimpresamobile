@@ -26,9 +26,10 @@ public class MonitoraggioTable  {
 	
 	
 	public  ArrayList<Monitoraggio> selectAllMonitoraggio(ArrayList<Monitoraggio> listMonitoriaggio){
-		
-		String selectQuery = 		"SELECT DISTINCT id_Monitoraggio,Nominativo,Tipo_Scheda,Nom2,applicazione,commessa_n,Area,citta,data_Monitoraggio,sigla_dispositivo,evaso  "
-								+   "FROM " + TABLE_NAME +  " as m inner  join Monitoraggio_voci mv on (m.id_Monitoraggio=mv.cod_Mon) where Tipo_Scheda=1  LIMIT 10;";
+
+		String selectQuery = 		"SELECT DISTINCT  id_Monitoraggio,Nominativo,Tipo_Scheda,Nom2,applicazione,commessa_n,Area,citta,data_Monitoraggio,Tipo_Dispositivo,evaso, Andamento  "
+								+   "FROM " + TABLE_NAME +  " as m  ";
+							//	+ "inner  join Monitoraggio_voci mv on (m.id_Monitoraggio=mv.cod_Mon) ";
 
 		
 		Cursor			cursor	= ourDatabase.rawQuery(selectQuery, null);
@@ -47,7 +48,8 @@ public class MonitoraggioTable  {
 			monit.setArea(( cursor.getString(cursor.getColumnIndex("Area"))));
 			monit.setCitta(( cursor.getString(cursor.getColumnIndex("citta"))));
 			monit.setData(GlobalConstants.spiltDate(( cursor.getString(cursor.getColumnIndex("data_Monitoraggio")))));
-			monit.setSigla(( cursor.getString(cursor.getColumnIndex("sigla_dispositivo"))));
+			monit.setSigla(( cursor.getString(cursor.getColumnIndex("Tipo_Dispositivo"))));
+			monit.setAndamento(( cursor.getString(cursor.getColumnIndex("Andamento"))));
 			
 			int ev =  cursor.getInt(cursor.getColumnIndex("evaso"));
 			
@@ -117,7 +119,7 @@ public class MonitoraggioTable  {
 	
 	public boolean updateBuono (Monitoraggio mon){
 		
-	 System.out.println("id"+mon.getId_monitoraggio());
+	
 		try{
 		
 		String updateQuery = 	"UPDATE  "+TABLE_NAME+" SET "
@@ -127,13 +129,15 @@ public class MonitoraggioTable  {
 							  + "ora_fine = '1899-12-30 "+mon.getOra_fine()+"', "
 							  + "Automezzo='"+mon.getAutomezzo()+"', "
 							  + "Km = '"+mon.getKm()+"' , "
-							  + "comunica_ope='"+mon.getComunicazione_operatore().replaceAll("'", "''")+"', evaso=1 "
+							  + "Andamento = '"+mon.getAndamento()+"' , "
+							  + "comunica_ope='"+mon.getComunicazione_operatore().replaceAll("'", "''")+"' "
 							  
 							  + "WHERE  id_Monitoraggio='"+mon.getId_monitoraggio()+"'"; 
 				
-
-     ourDatabase.execSQL(updateQuery);
-      
+	
+      ourDatabase.execSQL(updateQuery);
+  	ourDatabase.execSQL(GlobalConstants.getQueryLog(updateQuery));
+  	
       /* ContentValues values = new ContentValues();
         values.put("CampoNote", "pippo2"); // Contact Name
         String strFilter = "id_Monitoraggio="+mon.getId_monitoraggio();

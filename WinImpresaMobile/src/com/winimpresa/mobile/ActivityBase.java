@@ -2,6 +2,9 @@ package com.winimpresa.mobile;
 
 import java.io.IOException;
 
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.session.AppKeyPair;
 import com.winimpresa.mobile.database.AssetDatabaseOpenHelper;
 import com.winimpresa.mobile.interfaces.ActivityInterface;
 import com.winimpresa.mobile.to.MonitoriaggioVoci;
@@ -15,6 +18,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
@@ -24,7 +29,7 @@ public class ActivityBase extends Activity implements ActivityInterface{
 	public SQLiteDatabase db ;
 	public SharedPreferences pref;
 	public Editor editor;
-	
+	public DropboxAPI<AndroidAuthSession> mDBApi;
 	
 	
 	protected void onCreate(Bundle savedInstanceState, int layoutId) {
@@ -104,6 +109,10 @@ public class ActivityBase extends Activity implements ActivityInterface{
 	    	}
 	    	
 	    	return flag;
+	    }
+	    
+	    public void closekeyboard(){
+	    	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	    }
 	   
 	   @Override
@@ -187,6 +196,40 @@ public class ActivityBase extends Activity implements ActivityInterface{
 			return false;
 		}
 
+
+
+
+		@Override
+		public String[] taArticoli(String[] articoli) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+
+
+		@Override
+		public String[] taTipoDispositivo(String[] tipoDisp) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		@Override
+		public void realseWithDrop(){
+			
+		}
+
+		
+	    public void gestionDropBox(){
+	    	   AppKeyPair appKeys = new AppKeyPair(GlobalConstants.APP_KEY_DROP, GlobalConstants.APP_SECRET_DROP);
+	           AndroidAuthSession session = new AndroidAuthSession(appKeys);
+	          	mDBApi = new DropboxAPI<AndroidAuthSession>(session);
+	           
+	    }
+	    
+	    
+	    
+	    
 
 
 

@@ -16,7 +16,7 @@ import com.winimpresa.mobile.ActivityBase;
 import com.winimpresa.mobile.R;
 import com.winimpresa.mobile.to.MonitoriaggioVoci;
 
-public class Tipo1 extends Fragment  {
+public class Tipo7 extends Fragment  {
 	
 	public ActivityBase activityBase;
 	private Spinner spinnerAttivita;
@@ -44,11 +44,11 @@ public class Tipo1 extends Fragment  {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_scheda1,
+		View rootView = inflater.inflate(R.layout.fragment_scheda7,
 				container, false);
-		spinnerAttivita = (Spinner) rootView.findViewById(R.id.spinnerAttivita);
-		spinnerStatoEsca = (Spinner) rootView.findViewById(R.id.spinnerStatoEsca);
-		spinnerProdottoSost = (Spinner) rootView.findViewById(R.id.spinnerProdottoSostituito);
+		spinnerAttivita = (Spinner) rootView.findViewById(R.id.attivita);
+		spinnerStatoEsca = (Spinner) rootView.findViewById(R.id.statoEsca);
+		spinnerProdottoSost = (Spinner) rootView.findViewById(R.id.tipo_sost);
 	    Button saveDisp     = (Button) rootView.findViewById(R.id.saveDisp);
 	    Button tornaIndietro     = (Button) rootView.findViewById(R.id.tornaIndietro);
 	    

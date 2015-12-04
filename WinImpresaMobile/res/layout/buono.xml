@@ -37,7 +37,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:background="@android:color/holo_blue_light"
-                    android:text="Data :"
+                    android:text="Data"
+                    android:gravity="center"
+                    android:padding="3dp"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -63,7 +65,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
-                    android:text="Sigla :"
+                    android:text="Sigla"
+                    android:padding="3dp"
+                    android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -89,7 +93,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
-                    android:text="Descrizione :"
+                    android:text="Descrizione"
+                    android:padding="3dp"
+                     android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -115,7 +121,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
-                    android:text="Cliente :"
+                    android:text="Cliente"
+                    android:padding="3dp"
+                     android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -141,7 +149,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
-                    android:text="N° Commessa :"
+                    android:text="N° Commessa"
+                    android:padding="3dp"
+                     android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -167,7 +177,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
-                    android:text="Comune :"
+                    android:text="Comune"
+                    android:padding="3dp"
+                     android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -193,7 +205,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
-                    android:text="Area :"
+                    android:text="Area"
+                    android:padding="3dp"
+                     android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="13sp" >
                 </TextView>
@@ -210,12 +224,7 @@
                 </TextView>
             </TableRow>
         </TableLayout>
-           <ImageView
-            android:layout_gravity="center"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            
-            android:src="@drawable/edit" />
+         
     </LinearLayout>
      
 </RelativeLayout>

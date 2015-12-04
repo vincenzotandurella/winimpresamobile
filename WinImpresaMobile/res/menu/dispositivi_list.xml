@@ -2,6 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.winimpresa.mobile.DispositiviListActivity" >
 
-  
+  <item
+        android:id="@+id/add"
+        android:orderInCategory="100"
+          android:icon="@android:drawable/ic_menu_add"
+       android:showAsAction="always|withText"
+       android:title="Aggiungi dispositivo"
+       />
 
 </menu>

@@ -9,14 +9,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-public class SyncLocalDatabase extends AsyncTask<String, Void, Boolean> {
+public class ReleaseLocalDatabase extends AsyncTask<String, Void, Boolean> {
 	
 
 	private ProgressDialog 	progress;
     private ManagementDB    mdb;
 	private ActivityInterface acty;
 	
-	public SyncLocalDatabase (SQLiteDatabase db, Context ctx,ProgressDialog 	progress,ActivityBase base){
+	public ReleaseLocalDatabase (SQLiteDatabase db, Context ctx,ProgressDialog 	progress,ActivityBase base){
 		this.progress = progress;
 		mdb = new ManagementDB(db,ctx,progress,base);
 		this.progress.show();
@@ -29,7 +29,7 @@ public class SyncLocalDatabase extends AsyncTask<String, Void, Boolean> {
      
     	
     	
-        return mdb.syncData(params[0],params[1]);
+        return mdb.relaseFile(params[0]);
     }
 
     @Override
@@ -37,7 +37,8 @@ public class SyncLocalDatabase extends AsyncTask<String, Void, Boolean> {
     	
     	if(result){
     	this.progress.hide();   	
-    	acty.showMessage("OK");
+    	acty.showMessage("File creato con successo! ");
+    	acty.realseWithDrop();
     	
     	
     	}

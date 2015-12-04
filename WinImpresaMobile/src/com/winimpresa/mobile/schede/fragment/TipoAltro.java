@@ -10,22 +10,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.winimpresa.mobile.ActivityBase;
 import com.winimpresa.mobile.R;
 import com.winimpresa.mobile.to.MonitoriaggioVoci;
 
-public class Tipo1 extends Fragment  {
+public class TipoAltro extends Fragment  {
 	
 	public ActivityBase activityBase;
 	private Spinner spinnerAttivita;
 	private Spinner spinnerStatoEsca;
 	private Spinner spinnerProdottoSost;
+	private Spinner spinnerCodDisp;
+	private Spinner spinnerErogatore;
+	private EditText sigla_dispositivo;
 	private MonitoriaggioVoci monitoraggio;
     String[] attivitaall = new String[]{}; 
     String[] statoEscaall = new String[]{}; 
     String[] prodottoSostall = new String[]{}; 
+    String[] articoli = new String[]{}; 
+    String[] tipoDisp = new String[]{}; 
 	
     
    
@@ -38,17 +44,23 @@ public class Tipo1 extends Fragment  {
 	    attivitaall = activityBase.taAttivita(attivitaall);
 	    statoEscaall = activityBase.taStatoEsca(statoEscaall);
 	    prodottoSostall = activityBase.taTipoSostituzione(prodottoSostall);
+	    articoli        = activityBase.taArticoli(articoli);
+	    tipoDisp   =   activityBase.taTipoDispositivo(tipoDisp);
 	    monitoraggio  = activityBase.getMonitoriaggioVoci();
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_scheda1,
+		View rootView = inflater.inflate(R.layout.fragment_scheda_altro,
 				container, false);
-		spinnerAttivita = (Spinner) rootView.findViewById(R.id.spinnerAttivita);
-		spinnerStatoEsca = (Spinner) rootView.findViewById(R.id.spinnerStatoEsca);
-		spinnerProdottoSost = (Spinner) rootView.findViewById(R.id.spinnerProdottoSostituito);
+		spinnerAttivita 	= (Spinner) rootView.findViewById(R.id.attivita);
+		spinnerStatoEsca 	= (Spinner) rootView.findViewById(R.id.statoEsca);
+		spinnerProdottoSost = (Spinner) rootView.findViewById(R.id.tipo_sost);
+		spinnerCodDisp 		= (Spinner) rootView.findViewById(R.id.coddisp);
+		spinnerErogatore 	= (Spinner) rootView.findViewById(R.id.erogatore);
+		sigla_dispositivo  	= (EditText) rootView.findViewById(R.id.sigla_dispositivo);
+		
 	    Button saveDisp     = (Button) rootView.findViewById(R.id.saveDisp);
 	    Button tornaIndietro     = (Button) rootView.findViewById(R.id.tornaIndietro);
 	    
@@ -64,12 +76,25 @@ public class Tipo1 extends Fragment  {
 	    ArrayAdapter<String> adapterProdotti = new ArrayAdapter<String>(getActivity(),
 	            android.R.layout.simple_spinner_dropdown_item, prodottoSostall);
 	    spinnerProdottoSost.setAdapter(adapterProdotti);
+	    
+	    
+	  ArrayAdapter<String> adapterErogatore = new ArrayAdapter<String>(getActivity(),
+	            android.R.layout.simple_spinner_dropdown_item, tipoDisp);
+	    spinnerErogatore.setAdapter(adapterErogatore);
+	    
+	    ArrayAdapter<String> adapterCodDisp = new ArrayAdapter<String>(getActivity(),
+	            android.R.layout.simple_spinner_dropdown_item, articoli);
+	    spinnerCodDisp.setAdapter(adapterCodDisp);
 	     
-	    System.out.println(monitoraggio.getStatoEsca());
+	   
 	    spinnerAttivita.setSelection(Arrays.asList(attivitaall).indexOf(monitoraggio.getAttivita()),true);
 	    spinnerStatoEsca.setSelection( Arrays.asList(statoEscaall).indexOf(monitoraggio.getStatoEsca()),true);
 	    spinnerProdottoSost.setSelection( Arrays.asList(prodottoSostall).indexOf(monitoraggio.getProdottoSost()),true);
-	   
+	    spinnerErogatore.setSelection( Arrays.asList(tipoDisp).indexOf(monitoraggio.getErogatore()),true);
+	    spinnerCodDisp.setSelection( Arrays.asList(articoli).indexOf(monitoraggio.getCod_dispositivo()),true);
+	    sigla_dispositivo.setText(monitoraggio.getSigla_dispositivo());
+	    
+	    
 	    saveDisp.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -102,7 +127,9 @@ public class Tipo1 extends Fragment  {
 		monitoraggio.setAttivita(spinnerAttivita.getSelectedItem().toString());
 		monitoraggio.setStatoEsca(spinnerStatoEsca.getSelectedItem().toString());
 		monitoraggio.setProdottoSost(spinnerProdottoSost.getSelectedItem().toString());
-		
+		monitoraggio.setErogatore(spinnerErogatore.getSelectedItem().toString());
+		monitoraggio.setCod_dispositivo(spinnerCodDisp.getSelectedItem().toString());
+		monitoraggio.setSigla_dispositivo(sigla_dispositivo.getText().toString());
 		activityBase.updateMonitoraggioVoci(monitoraggio);
 		
 	}

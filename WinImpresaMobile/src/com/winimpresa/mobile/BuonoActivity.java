@@ -1,6 +1,9 @@
 package com.winimpresa.mobile;
 
+import java.util.Arrays;
 import java.util.Calendar;
+
+
 
 
 
@@ -50,6 +53,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -69,7 +73,7 @@ public class BuonoActivity extends ActivityBase {
  private EditText automezzo;
  private EditText km;
  private EditText comunicazione_operatore;
- private EditText andamento_lavori;
+ private Spinner andamento_lavori;
 
  private Button  dispositivi;
  private long current_id_buono = 0;
@@ -118,8 +122,8 @@ public class BuonoActivity extends ActivityBase {
 		tipo_moni				=    (TextView) findViewById(R.id.tipo);
 		dispositivi		     	=    (Button)   findViewById(R.id.settori);
 		Button magazzino		=    (Button)   findViewById(R.id.magazzino);
+		andamento_lavori		=    (Spinner) findViewById(R.id.andamLavori);
 		
-		dispositivi.setText(getResources().getText(R.string.labelDispositivi)+ " ("+tableMoniVoci.getNumDipositivi(current_id_buono)+")");
 		setInformation();
 		automezzo.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
 		
@@ -127,9 +131,7 @@ public class BuonoActivity extends ActivityBase {
 
 				@Override
 				public void onClick(View v) {
-					 Calendar mcurrentTime = Calendar.getInstance();
-		                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-		                int minute = mcurrentTime.get(Calendar.MINUTE);
+					 int [] time= setTimePopup(oraInizio);
 		                TimePickerDialog tpd = new TimePickerDialog(context,
 		                        new TimePickerDialog.OnTimeSetListener() {
 		     
@@ -137,9 +139,19 @@ public class BuonoActivity extends ActivityBase {
 		                            public void onTimeSet(TimePicker view, int hourOfDay,
 		                                    int minute) {
 		                                // Display Selected time in textbox
-		                                oraInizio.setText(hourOfDay + ":" + minute);
+		                               
+		                            	if(GlobalConstants.differentTime(GlobalConstants.setIntTime(hourOfDay) + ":" + GlobalConstants.setIntTime(minute),oraFine.getText().toString())<0){
+		                            		showToast("L'ora inizio è maggiore dell'ora fine");
+			                            	oraFine.setText(GlobalConstants.setIntTime(hourOfDay) + ":" + GlobalConstants.setIntTime(minute) );
+
+		                            		return;
+		                            	}
+		                            	
+		                            	
+		                            	oraInizio.setText(GlobalConstants.setIntTime(hourOfDay) + ":" + GlobalConstants.setIntTime(minute) );
+
 		                            }
-		                        }, hour, minute, false);
+		                        }, time[0], time[1], false);
 		                tpd.show();
 				
 				}
@@ -149,9 +161,7 @@ public class BuonoActivity extends ActivityBase {
 
 			@Override
 			public void onClick(View v) {
-				 Calendar mcurrentTime = Calendar.getInstance();
-	                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-	                int minute = mcurrentTime.get(Calendar.MINUTE);
+				 int [] time= setTimePopup(oraFine);
 	                TimePickerDialog tpd = new TimePickerDialog(context,
 	                        new TimePickerDialog.OnTimeSetListener() {
 	     
@@ -159,9 +169,17 @@ public class BuonoActivity extends ActivityBase {
 	                            public void onTimeSet(TimePicker view, int hourOfDay,
 	                                    int minute) {
 	                                // Display Selected time in textbox
-	                            	oraFine.setText(hourOfDay + ":" + minute);
+	                            	if(GlobalConstants.differentTime(oraInizio.getText().toString(),GlobalConstants.setIntTime(hourOfDay) + ":" + GlobalConstants.setIntTime(minute))<0){
+	                            		showToast("L'ora fine è minore dell'ora inizio");
+		                            	oraInizio.setText(GlobalConstants.setIntTime(hourOfDay) + ":" + GlobalConstants.setIntTime(minute) );
+
+	                            		return;
+	                            	}
+	                            	
+	                            	oraFine.setText(GlobalConstants.setIntTime(hourOfDay) + ":" + GlobalConstants.setIntTime(minute) );
+	                              
 	                            }
-	                        }, hour, minute, false);
+	                        }, time[0], time[1], false);
 	                tpd.show();
 			
 			}
@@ -188,6 +206,26 @@ public class BuonoActivity extends ActivityBase {
 	}
    
    
+   public int[] setTimePopup(TextView time){
+	   String get_time = time.getText().toString();
+	   int [] totalTime = new int[2];
+	   if(!get_time.equalsIgnoreCase("")){
+		   
+		   totalTime[0] = Integer.parseInt(get_time.split(":")[0]);
+		   totalTime[1] = Integer.parseInt(get_time.split(":")[1]);
+	   }
+	   else{
+		   
+		   Calendar mcurrentTime = Calendar.getInstance();
+		   totalTime[0] = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+		   totalTime[1] = mcurrentTime.get(Calendar.MINUTE);
+	   }
+	   
+	   return totalTime;
+	   
+   }
+   
+   
   private void setInformation(){
 	  
  	 Log.d(TAG_LOG,"tipo scheda "+monitoraggio.getTipo_scheda() );
@@ -203,7 +241,9 @@ public class BuonoActivity extends ActivityBase {
 	  automezzo.setText(monitoraggio.getAutomezzo());
 	  km.setText(""+monitoraggio.getKm());
 	  comunicazione_operatore.setText(monitoraggio.getComunicazione_operatore());
-	 
+	  
+	  andamento_lavori.setSelection(Arrays.asList(getResources().getStringArray(R.array.andam)).indexOf(monitoraggio.getAndamento()),true);
+	  
 	  
   }
   
@@ -217,7 +257,7 @@ public class BuonoActivity extends ActivityBase {
 	  monitoraggio.setAutomezzo(automezzo.getText().toString());
 	  monitoraggio.setKm(Integer.parseInt(km.getText().toString()));
 	  monitoraggio.setComunicazione_operatore(comunicazione_operatore.getText().toString());
-	  
+	  monitoraggio.setAndamento(andamento_lavori.getSelectedItem().toString());
   }
    
    public void backList(){
@@ -336,4 +376,13 @@ public void dialogBox() {
 		DialogGlobalBack dialog = new DialogGlobalBack(this,getResources().getString(R.string.labelMessaggeControlSaveBuono));
         dialog.show(getFragmentManager(),"");
 	}
+	
+	@Override
+	public void onResume(){
+	    super.onResume();
+		dispositivi.setText(getResources().getText(R.string.labelDispositivi)+ " ("+tableMoniVoci.getNumDipositivi(current_id_buono)+")");
+
+
+	}
+	
 }

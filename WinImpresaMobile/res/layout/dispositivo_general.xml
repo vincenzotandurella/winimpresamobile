@@ -12,9 +12,9 @@
          
          >
          <ImageView 
-             android:src="@drawable/qrcode_scan"
-             android:layout_width="45dp"
-             android:layout_height="45dp"
+             android:src="@drawable/edit"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
              android:layout_alignParentRight="true"
              />
          

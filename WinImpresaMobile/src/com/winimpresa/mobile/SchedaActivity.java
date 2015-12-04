@@ -2,21 +2,23 @@ package com.winimpresa.mobile;
 
 import com.winimpresa.mobile.database.MonitoraggioVociTable;
 import com.winimpresa.mobile.schede.fragment.Tipo1;
+import com.winimpresa.mobile.schede.fragment.Tipo2;
+import com.winimpresa.mobile.schede.fragment.Tipo3;
+import com.winimpresa.mobile.schede.fragment.Tipo4;
+import com.winimpresa.mobile.schede.fragment.Tipo5;
+import com.winimpresa.mobile.schede.fragment.Tipo6;
+import com.winimpresa.mobile.schede.fragment.Tipo7;
+import com.winimpresa.mobile.schede.fragment.TipoAltro;
 import com.winimpresa.mobile.to.MonitoriaggioVoci;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
-import android.app.Activity;
 import android.app.ActionBar;
-import android.app.Fragment;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+
 
 public class SchedaActivity extends ActivityBase {
 	private static final String TAG_LOG = MainActivity.class.getName();
@@ -36,14 +38,17 @@ public class SchedaActivity extends ActivityBase {
 		ab.setIcon( new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 		ab.setSubtitle(user.getFullName() + " / "+user.getIdUser());
 		bundle  = getIntent().getExtras();
+		
 		if (bundle != null) {
 		       
 	    	
-       	  Log.d(TAG_LOG,"TYPE_SCHEDA "+ bundle.getInt(GlobalConstants.TYPESCHEDA));
+       	
        	   current_id_buono = bundle.getLong(GlobalConstants.IDBUONO);
        	   type_scheda 		= bundle.getInt(GlobalConstants.TYPESCHEDA);
        	   current_id_voce 	= bundle.getInt(GlobalConstants.IDVOCE);
 		}
+		
+		
 		
 		
 		if (savedInstanceState == null) {
@@ -53,19 +58,64 @@ public class SchedaActivity extends ActivityBase {
 				getFragmentManager().beginTransaction()
 				.add(R.id.container, new Tipo1()).commit();
 				break;
-
-			default:
+				
+			case 2:
+				ab.setTitle("Buono roditore trappola");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new Tipo2()).commit();
 				break;
+				
+			case 3:
+				ab.setTitle("Buono insetti striscianti");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new Tipo3()).commit();
+				break;
+			case 4:
+				ab.setTitle("Buono insetti striscianti delle derrate alimentari");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new Tipo4()).commit();
+				break;
+				
+			case 5:
+				ab.setTitle("Buono insetti volanti");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new Tipo5()).commit();
+				break;
+
+			case 6:
+				ab.setTitle("Buono insetti volanti delle derrate alimentari");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new Tipo6()).commit();
+				break;
+			case 19:
+				ab.setTitle("Buono insetti volanti delle derrate alimentari");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new Tipo7()).commit();
+				break;
+				
+				
+			default:
+				
+				ab.setTitle("Altri buoni");
+				getFragmentManager().beginTransaction()
+				.add(R.id.container, new TipoAltro()).commit();
+				break;
+				
 			}
 			
 			
 		}
+		
+		
 		tableVoci 	  = new MonitoraggioVociTable(context, db);
 		monintoraggio = new MonitoriaggioVoci();
 		monintoraggio = tableVoci.getDispoisitivo(monintoraggio, current_id_voce);
 		
 	}
 
+	
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -104,6 +154,20 @@ public class SchedaActivity extends ActivityBase {
 	public String[] taTipoSostituzione(String[] prodottoSostituito) {
 		// TODO Auto-generated method stub
 		return tableVoci.getTaTipoSostituzione(prodottoSostituito);
+	}
+	
+	
+	@Override
+	public String[] taArticoli(String[] articoli) {
+		// TODO Auto-generated method stub
+		return tableVoci.getArticoli(articoli);
+	}
+	
+	
+	@Override
+	public String[] taTipoDispositivo(String[] tipoDisp) {
+		// TODO Auto-generated method stub
+		return tableVoci.getTipoDispositivo(tipoDisp);
 	}
 	
 	@Override
