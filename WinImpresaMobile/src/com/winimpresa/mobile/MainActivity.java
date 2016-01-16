@@ -9,14 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
-import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.DropboxAPI.DropboxFileInfo;
-import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.exception.DropboxException;
-import com.dropbox.client2.session.AppKeyPair;
-import com.dropbox.client2.session.Session.AccessType;
+import com.dropbox.core.DbxClient;
+import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
 import com.winimpresa.mobile.async.SyncLocalDatabase;
 import com.winimpresa.mobile.database.ManagementDB;
 import com.winimpresa.mobile.utility.GlobalConstants;
@@ -53,7 +51,7 @@ public class MainActivity extends ActivityBase {
         super.onCreate(savedInstanceState, R.layout.activity_main);
     	
         
-        gestionDropBox();
+       
     	
     	
     	// SE ESISTE LA SESSIONE PASSA ALLA SCHERAMA DEI BUONI
@@ -136,7 +134,7 @@ public class MainActivity extends ActivityBase {
     protected void onResume() {
         super.onResume();
 
-        if (mDBApi.getSession().authenticationSuccessful()) {
+      /*  if (mDBApi.getSession().authenticationSuccessful()) {
             try {
                 // Required to complete auth, sets the access token on the session
                 mDBApi.getSession().finishAuthentication();
@@ -150,6 +148,7 @@ public class MainActivity extends ActivityBase {
                 Log.i("DbAuthLog", "Error authenticating", e);
             }
         }
+        */
     }
     
     
@@ -169,8 +168,21 @@ public class MainActivity extends ActivityBase {
         protected void onPostExecute(String result) {
         	
         	if(result.equals("success")){
+        		
         		syncFile();
         	}
+        	if(result.equals("error")){
+        		 showToast("Per oggi non hai più attività da fare ");
+          		 progress.hide();
+        		
+        	}
+        	if(result.equals("errorDrop")){
+       		 showToast("Il file delle tue attività non è presenete contatta l'amministratore");
+         		 progress.hide();
+       		
+       	}
+        	
+        
         }
         
 
@@ -189,6 +201,7 @@ public class MainActivity extends ActivityBase {
     private void syncFile(){
     	SyncLocalDatabase sync  = new SyncLocalDatabase(db,context,progress,this);
     	String[] param = {"drop",user.getIdUser()};
+    	
     	sync.execute(param);
     	
     }
@@ -197,7 +210,9 @@ public class MainActivity extends ActivityBase {
     
     public String readFileDrop() {
     	
-    	String result = "error";
+    
+    	
+    	gestionDropBox();
     	File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocal);
     	 
     	if(!rootPath.exists()) {
@@ -217,6 +232,10 @@ public class MainActivity extends ActivityBase {
 				e.printStackTrace();
 			}
     	 }
+    	 else{
+    		
+    		 return "error";
+    	 }
     	 FileOutputStream outputStream = null;
 		try {
 			 outputStream = new FileOutputStream(file);
@@ -225,26 +244,37 @@ public class MainActivity extends ActivityBase {
 			e.printStackTrace();
 		}
 		System.out.println(GlobalConstants.getNameFileDrop(user.getIdUser()));
-    	try {
+    	
     		
-    		DropboxFileInfo info = mDBApi.getFile(GlobalConstants.readPathDropBox+GlobalConstants.getNameFileDrop(user.getIdUser()), null, outputStream, null);
-    		 result ="success";
+    		try {
+				DbxEntry.File downloadedFile= client.getFile(GlobalConstants.readPathDropBox+GlobalConstants.getNameFileDrop(user.getIdUser()), null, outputStream);
+				System.out.println("Metadata: " + downloadedFile.toString());
+				return "success";
+    		} catch (DbxException e) {
+    			
+    			return "errorDrop";
+				// TODO Auto-generated catch block
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				return "errorDrop";
+				
+			}
+    		
+    		
     		
 			
-		} catch (DropboxException e) {
-			// TODO Auto-generated catch block
 			
-			e.printStackTrace();
-		}
     
-    		return result;
+    		
     }
     
     public void syncWithDrop(View view){
+    	progress.show();
+    	//mDBApi.getSession().startOAuth2Authentication(MainActivity.this);
+    	 LongOperationDropBox a = new LongOperationDropBox();
+         a.execute();
     	
-    	mDBApi.getSession().startOAuth2Authentication(MainActivity.this);
-    
-   
  
     }
     
@@ -255,6 +285,7 @@ public class MainActivity extends ActivityBase {
 	public void showMessage(String msg) {
 		// TODO Auto-generated method stub
     	if(msg.equalsIgnoreCase("OK")){
+    		progress.hide();
     		showToast("Database syncronizzato con successo ...");
     		showToast("Questa è una demo");
     		setInitStrat();

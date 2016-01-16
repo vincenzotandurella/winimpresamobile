@@ -2,25 +2,24 @@ package com.winimpresa.mobile;
 
 
 
-import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
-import com.dropbox.client2.DropboxAPI.Entry;
+import java.io.IOException;
+
+
+import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxWriteMode;
 import com.winimpresa.mobile.async.ReleaseLocalDatabase;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,10 +61,11 @@ public class RilascioActivity extends ActivityBase {
 	}
 	
 	   public void syncWithDrop(View view){
-	    	
+		   progress.show();
 	    ReleaseLocalDatabase rel = new ReleaseLocalDatabase(db, context, progress, this);
 	    String[] param = {user.getIdUser()};
         rel.execute(param);
+        
 	 
 	    }
 	   
@@ -84,13 +84,17 @@ public class RilascioActivity extends ActivityBase {
 		@Override
 	   public void realseWithDrop(){
 			startRilascio=1;
-		   mDBApi.getSession().startOAuth2Authentication(RilascioActivity.this);
+			LongOperationDropBox a = new LongOperationDropBox();
+        	a.execute();
+		  // mDBApi.getSession().startOAuth2Authentication(RilascioActivity.this);
 
 	   }
 	
 	
 	
 	public String createFileDump(){
+		gestionDropBox();
+		
 		try {
 			File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocalReleaase);
 	    	 
@@ -118,11 +122,13 @@ public class RilascioActivity extends ActivityBase {
 //	            w.close();
 			
 			FileInputStream inputStream = new FileInputStream(file);
-		
+			 DbxEntry.File uploadedFile = client.uploadFile("/fine_attivita/"+GlobalConstants.getNameFileDropRelease(user.getIdUser()),
+		           DbxWriteMode.add(), file.length(), inputStream);
+		            System.out.println("Uploaded: " + uploadedFile.toString());
 			//display file saved message
-			Entry response = mDBApi.putFile("/"+GlobalConstants.getNameFileDropRelease(user.getIdUser()), inputStream,
-					file.length(), null, null);
-				Log.i("DbExampleLog", "The uploaded file's rev is: " + response.rev);
+		//	Entry response = mDBApi.putFile("/"+GlobalConstants.getNameFileDropRelease(user.getIdUser()), inputStream,
+				//	file.length(), null, null);
+		//		Log.i("DbExampleLog", "The uploaded file's rev is: " + response.rev);
 			    
 				return "success";
 		} catch (Exception e) {
@@ -139,7 +145,7 @@ public class RilascioActivity extends ActivityBase {
 	    protected void onResume() {
 	        super.onResume();
 
-	        if (mDBApi.getSession().authenticationSuccessful()) {
+	      /*  if (mDBApi.getSession().authenticationSuccessful()) {
 	            try {
 	                // Required to complete auth, sets the access token on the session
 	                mDBApi.getSession().finishAuthentication();
@@ -153,7 +159,7 @@ public class RilascioActivity extends ActivityBase {
 	            } catch (IllegalStateException e) {
 	                Log.i("DbAuthLog", "Error authenticating", e);
 	            }
-	        }
+	        }*/
 	    }
 	   
 	   
@@ -169,6 +175,8 @@ public class RilascioActivity extends ActivityBase {
 	        protected void onPostExecute(String result) {
 	        	
 	        	if(result.equals("success")){
+	        		progress.hide();
+	        		showToast("Invio dati con successo !");
 	        		logout();
 	        		goLogin();
 	        		

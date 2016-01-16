@@ -15,10 +15,12 @@ public class GlobalConstants {
 	public static int   timeoutQrCode = 10; // secondi di tempo per recuperare il qrcode
 	public static String tabellaLog = "tabellaLog";
 	
-	public static String pathFolderDropLocal = "/winImpresaMobile/dropBox/initial";
-	public static String pathFolderDropLocalReleaase = "/winImpresaMobile/dropBox/release";
+	public static String nomeappdropbox      = "/winimpresaapp";
+	public static String pathFolderDropLocal = "winimpresaapp/dumpattivita";  // path dove rilascio il file localmente
+	public static String pathFolderDropLocalReleaase = "winimpresaapp/dropBox/release";
+	public static String token_dropbox = "4-9Z_gq3yzAAAAAAAAAACAPYhXZ2Vz38zZJH850ZtqHY9Xp8PbfhSkCLmWMYT9mc";
 	
-	public static String readPathDropBox = "/";
+	public static String readPathDropBox = "/buoni_utenti/";
 	
 	
 	
@@ -32,8 +34,8 @@ public class GlobalConstants {
 	public static final String IDBUONO							  	  = "ID_BUONO";
 	public static final String TYPESCHEDA							  = "TYPESCHEDA";
 	public static final String IDVOCE							 	  = "IDVOCE";
-	public static final String APP_KEY_DROP = "adguqy9n11kzg04";
-	public static final String APP_SECRET_DROP = "1i7g5vhi432irvr";
+	public static final String APP_KEY_DROP = "gc4jcaw21iuxp0z";
+	public static final String APP_SECRET_DROP = "hoy7n6z2g3bztxb";
 	
 	
 	

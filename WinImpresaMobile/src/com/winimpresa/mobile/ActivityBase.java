@@ -1,10 +1,11 @@
 package com.winimpresa.mobile;
 
 import java.io.IOException;
+import java.util.Locale;
 
-import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.session.AppKeyPair;
+import com.dropbox.core.DbxClient;
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
 import com.winimpresa.mobile.database.AssetDatabaseOpenHelper;
 import com.winimpresa.mobile.interfaces.ActivityInterface;
 import com.winimpresa.mobile.to.MonitoriaggioVoci;
@@ -29,7 +30,7 @@ public class ActivityBase extends Activity implements ActivityInterface{
 	public SQLiteDatabase db ;
 	public SharedPreferences pref;
 	public Editor editor;
-	public DropboxAPI<AndroidAuthSession> mDBApi;
+	public   DbxClient client;
 	
 	
 	protected void onCreate(Bundle savedInstanceState, int layoutId) {
@@ -221,10 +222,9 @@ public class ActivityBase extends Activity implements ActivityInterface{
 
 		
 	    public void gestionDropBox(){
-	    	   AppKeyPair appKeys = new AppKeyPair(GlobalConstants.APP_KEY_DROP, GlobalConstants.APP_SECRET_DROP);
-	           AndroidAuthSession session = new AndroidAuthSession(appKeys);
-	          	mDBApi = new DropboxAPI<AndroidAuthSession>(session);
-	           
+	    	 DbxRequestConfig config = new DbxRequestConfig(GlobalConstants.nomeappdropbox, Locale.getDefault().toString());
+	        client = new DbxClient(config, GlobalConstants.token_dropbox);
+	       
 	    }
 	    
 	    

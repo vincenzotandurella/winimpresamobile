@@ -80,7 +80,22 @@ public class ManagementDB {
 		boolean flag = false;
 		
 		File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocalReleaase);
+		if(!rootPath.exists()) {
+	           rootPath.mkdirs();
+	           
+	         }
+		
 		File file = new File(rootPath,GlobalConstants.getNameFileDropRelease(user)+"");
+		 if(!file.exists()) {
+    		 try {
+				file.createNewFile();
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			
+				e.printStackTrace();
+			}
+		 }
 		  FileOutputStream is = null;
 		try {
 			is = new FileOutputStream(file);
@@ -172,7 +187,7 @@ public class ManagementDB {
 					+ File.separator
 					+ GlobalConstants.pathFolderDropLocal
 					+ "/"+GlobalConstants.getNameFileDrop(userId));
-
+        
 			InputStream in = file;
 			if (in != null) {
 				// prepare the file for reading
@@ -188,7 +203,7 @@ public class ManagementDB {
 
 					if (line.contains(";")) {
 						incompleteLine = incompleteLine + line;
-						System.out.println(incompleteLine);
+						
 						ourDatabase.execSQL(incompleteLine);
 						incompleteLine = "";
 
