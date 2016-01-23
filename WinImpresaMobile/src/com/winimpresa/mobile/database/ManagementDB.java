@@ -220,10 +220,12 @@ public class ManagementDB {
 						incompleteLine = incompleteLine + line;
 					}
 
-					in.close();
+					
 						
-					return true;
+					
 				}
+				in.close();
+				return true;
 				
 			}
 		} catch (Exception e) {
