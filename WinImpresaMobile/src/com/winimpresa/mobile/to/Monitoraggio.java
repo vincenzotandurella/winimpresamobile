@@ -25,10 +25,34 @@ public class Monitoraggio {
 	private String andamento;
 	private String vpa;
 	private String tipo_monitoraggio;
+	private String dataNoFormat;
+	private boolean statoEvaso;
+	
+	
+
 	
 	
 	
 	
+	
+	
+	
+	public boolean isStatoEvaso() {
+		return statoEvaso;
+	}
+
+	public void setStatoEvaso(boolean statoEvaso) {
+		this.statoEvaso = statoEvaso;
+	}
+
+	public String getDataNoFormat() {
+		return dataNoFormat;
+	}
+
+	public void setDataNoFormat(String dataNoFormat) {
+		this.dataNoFormat = dataNoFormat;
+	}
+
 	public String getTipo_monitoraggio() {
 		if(tipo_monitoraggio==null)
 			return "";

@@ -36,8 +36,8 @@ public class ReleaseLocalDatabase extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean result) {
     	
     	if(result){
-    	this.progress.hide();   	
-    	acty.showMessage("File creato con successo! ");
+    	//this.progress.hide();   	
+    	acty.showMessage("File creato localmente ");
     	acty.realseWithDrop();
     	
     	

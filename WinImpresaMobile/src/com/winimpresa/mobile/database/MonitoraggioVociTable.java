@@ -2,6 +2,7 @@ package com.winimpresa.mobile.database;
 
 import java.util.ArrayList;
 
+import com.winimpresa.mobile.to.Articolo;
 import com.winimpresa.mobile.to.MonitoriaggioVoci;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
@@ -229,6 +230,52 @@ public class MonitoraggioVociTable extends ConnectionDb {
 		cursor.close();
 		return articoli;
 	}
+	
+	public ArrayList<Articolo> getArticoliList(ArrayList<Articolo> list) {
+		String selectQuery = " SELECT *   FROM Articoli where obsoleto=0";
+
+		Cursor cursor = ourDatabase.rawQuery(selectQuery, null);
+		
+		
+		list.add(new Articolo());
+
+		while (cursor.moveToNext()) {
+			Articolo art = new Articolo();
+			art.setDescrizione(cursor
+					.getString(cursor.getColumnIndex("Descrizione")));
+			art.setCodice(cursor
+					.getString(cursor.getColumnIndex("Codice")));
+			art.setId(cursor
+					.getString(cursor.getColumnIndex("id articolo")));
+			art.setUnita(cursor
+					.getString(cursor.getColumnIndex("unita")));
+
+			list.add(art);
+		}
+
+		cursor.close();
+		return list;
+	}
+	
+	public String[] getCodice(String[] articoli) {
+		String selectQuery = " SELECT *   FROM Articoli where obsoleto=0";
+
+		Cursor cursor = ourDatabase.rawQuery(selectQuery, null);
+		articoli = new String[cursor.getCount()+1];
+		int i = 1;
+		articoli[0] = "/";
+
+		while (cursor.moveToNext()) {
+			articoli[i] = cursor
+					.getString(cursor.getColumnIndex("Codice"));
+
+			i++;
+		}
+
+		cursor.close();
+		return articoli;
+	}
+	
 	
 	public String[] getTipoDispositivo(String[] tipoDisp) {
 		String selectQuery = " SELECT *   FROM Tipo_Dispositivo ";

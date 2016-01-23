@@ -10,6 +10,8 @@ import com.winimpresa.mobile.to.Monitoraggio;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +32,9 @@ private ListView listBuoni;
 private ArrayList<HashMap<String, Object>> dataBuoni ;
 private  SimpleAdapter adapter;
 private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>();
-
+private AlertDialog.Builder alertDialogBuilder;
+private boolean logTouch=false;
+private MonitoraggioTable mont;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -42,9 +46,9 @@ private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>(
 		getActionBar().setDisplayShowHomeEnabled(false);
 		//logout();
 		
-		MonitoraggioTable mont = new MonitoraggioTable(context, db);
+		mont  = new MonitoraggioTable(context, db);
 		monitoriaggioList = mont.selectAllMonitoraggio(monitoriaggioList);
-        
+		alertDialogBuilder 		= new AlertDialog.Builder(this);
 	
 	       
 	        dataBuoni = new ArrayList<HashMap<String,Object>>();
@@ -85,8 +89,17 @@ private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>(
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					// TODO Auto-generated method stub
-			
-					 Log.d(TAG_LOG,"Element selected "+ monitoriaggioList.get(position).getId_monitoraggio());
+					if (logTouch == true) {
+						logTouch = false;
+						return;
+					}
+					
+					 if(monitoriaggioList.get(position).isStatoEvaso()){
+						 showToast("Il buono è stato evaso !");
+						 return;
+					 }
+					
+					 
 					 Intent page_buono= new Intent(context, BuonoActivity.class);
 					 page_buono.putExtra(GlobalConstants.IDBUONO, monitoriaggioList.get(position).getId_monitoraggio());
 					
@@ -96,6 +109,18 @@ private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>(
 					 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 				}
 	    	});
+	     
+	     listBuoni.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+				public boolean onItemLongClick(AdapterView<?> arg0, View v,
+						int index, long arg3) {
+
+					logTouch = true;
+					dialogBoxStatus(index);
+					return false;
+				}
+			});
+	
 	     
 	}
 	
@@ -119,7 +144,57 @@ private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>(
 	     
 	
 	}
+public void dialogBoxStatus(final int pos) {
+
+	 final Monitoraggio m = monitoriaggioList.get(pos);
+	 String     text = "Evaso ";
+	 
+	 
+	 if(m.isStatoEvaso())
+		 text = "Non evaso";
+		 
 	
+	
+		alertDialogBuilder.setMessage("Vuoi modificare lo stato del buono?");
+		alertDialogBuilder.setPositiveButton(text,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						 if(m.isStatoEvaso()){
+							 
+							 m.setStatoEvaso(false);
+							 m.setEvaso(R.drawable.zero);
+						 }else{
+							 m.setStatoEvaso(true);
+							 m.setEvaso(R.drawable.uno);
+						 }
+						
+						if(mont.updateStatoMonitoraggio(m)){
+						     monitoriaggioList.set(pos, m);
+							dataBuoni.get(pos).put("ev", m.getEvaso());
+							adapter.notifyDataSetChanged();
+							 logTouch= false;
+						}else{
+							showToast("Errore durante la modifica !");
+						}
+						
+
+					}
+				});
+		alertDialogBuilder.setNegativeButton("Annulla",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						 logTouch= false;
+					}
+				});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+
+	}
 	
 	
 

@@ -56,7 +56,7 @@ public class ManagementDB {
 		userId = user;
 		createTableLog();
 		if(typeSync.equalsIgnoreCase("local")){
-			flag = deleteAllTable();
+			flag = insertDataLocal();
 		}
 		
 		if(typeSync.equalsIgnoreCase("drop")){
@@ -180,7 +180,7 @@ public class ManagementDB {
 
 		String line;
 		String incompleteLine = "";
-
+		
 		try {
 			FileInputStream file = new FileInputStream(Environment
 					.getExternalStorageDirectory().getAbsolutePath()
@@ -189,8 +189,77 @@ public class ManagementDB {
 					+ "/"+GlobalConstants.getNameFileDrop(userId));
         
 			InputStream in = file;
+			deleteQuery("Monitoraggio");
+			deleteQuery("Monitoraggio_voci");
 			if (in != null) {
 				// prepare the file for reading
+				InputStreamReader input = new InputStreamReader(in);
+				BufferedReader buffreader = new BufferedReader(input);
+
+				while ((line = buffreader.readLine()) != null) {
+
+					if (line.indexOf("-") == 0 || line.indexOf("/") == 0
+							|| line.indexOf("SET") == 0) {
+						continue;
+					}
+
+					if (line.contains(";")) {
+						incompleteLine = incompleteLine + line;
+						
+						try {
+							System.out.println(incompleteLine);
+							ourDatabase.execSQL(incompleteLine);
+						} catch (Exception e) {
+							// TODO: handle exception
+							return false;
+						}
+						
+						incompleteLine = "";
+
+					} else {
+						incompleteLine = incompleteLine + line;
+					}
+
+					in.close();
+						
+					return true;
+				}
+				
+			}
+		} catch (Exception e) {
+			Toast.makeText(ctx, e.toString() + e.getMessage(), 50000000).show();
+			return false;
+		}
+		return false;
+
+	}
+	
+	private boolean insertDataLocal() {
+
+		String line;
+		String incompleteLine = "";
+		File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderLocal);
+		if(!rootPath.exists()){
+			rootPath.mkdir();
+			return false;
+		}
+		 File fileStorage = new File(rootPath,GlobalConstants.getNameFileDrop(userId) );
+		 
+		 if(!fileStorage.exists()){
+			
+				return false;
+			}
+		try {
+			FileInputStream file = new FileInputStream(Environment
+					.getExternalStorageDirectory().getAbsolutePath()
+					+ File.separator
+					+ GlobalConstants.pathFolderLocal
+					+ "/"+GlobalConstants.getNameFileDrop(userId));
+             
+			InputStream in = file;
+			if (in != null) {
+				deleteQuery("Monitoraggio");
+				deleteQuery("Monitoraggio_voci");
 				InputStreamReader input = new InputStreamReader(in);
 				BufferedReader buffreader = new BufferedReader(input);
 
@@ -212,11 +281,10 @@ public class ManagementDB {
 					}
 
 					in.close();
-						System.out.println("Sto qui");
+						
 					return true;
 				}
-				Toast.makeText(ctx, "wee", 50000000).show();
-			} else {
+				
 			}
 		} catch (Exception e) {
 			Toast.makeText(ctx, e.toString() + e.getMessage(), 50000000).show();

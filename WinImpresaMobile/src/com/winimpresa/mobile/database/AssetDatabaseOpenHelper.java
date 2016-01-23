@@ -72,7 +72,7 @@ public class AssetDatabaseOpenHelper {
     	
     	try {
     	   // File sd = new File(Environment.getExternalStorageDirectory(),"PIPPOs");
-    		File sd = new File(System.getenv("SECONDARY_STORAGE"), "SABATINO_IMMA");
+    		File sd = new File(System.getenv("SECONDARY_STORAGE"), "SABATINO");
     	    sd.mkdirs();
     	    File data = Environment.getDataDirectory();
 

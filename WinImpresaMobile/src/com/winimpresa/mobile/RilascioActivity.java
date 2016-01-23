@@ -5,13 +5,12 @@ package com.winimpresa.mobile;
 
 import java.io.File;
 import java.io.FileInputStream;
-
 import java.io.IOException;
-
 
 import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxWriteMode;
 import com.winimpresa.mobile.async.ReleaseLocalDatabase;
+import com.winimpresa.mobile.utility.Connectivity;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
 import android.app.ProgressDialog;
@@ -19,7 +18,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +36,7 @@ public class RilascioActivity extends ActivityBase {
 		  gestionDropBox();
 		  
 		  progress = new ProgressDialog(context);
-		    progress.setMessage("Copia operazione in corso...");
+		  progress.setMessage("Copia operazione in corso...");
 	}
 
 	@Override
@@ -115,22 +113,21 @@ public class RilascioActivity extends ActivityBase {
 					e.printStackTrace();
 				}
 	    	 }
-//	    	  FileOutputStream is = new FileOutputStream(file);
-//	            OutputStreamWriter osw = new OutputStreamWriter(is);    
-//	            Writer w = new BufferedWriter(osw);
-//	            w.write("WINWER IS SABATINO!!!");
-//	            w.close();
+
 			
 			FileInputStream inputStream = new FileInputStream(file);
-			 DbxEntry.File uploadedFile = client.uploadFile("/fine_attivita/"+GlobalConstants.getNameFileDropRelease(user.getIdUser()),
+			
+			if(Connectivity.isConnected(context)){
+			 DbxEntry.File uploadedFile = client.uploadFile("/fine_attivita/"+user.getIdUser()+"/"+GlobalConstants.getNameFileDropRelease(user.getIdUser()),
 		           DbxWriteMode.add(), file.length(), inputStream);
-		            System.out.println("Uploaded: " + uploadedFile.toString());
-			//display file saved message
-		//	Entry response = mDBApi.putFile("/"+GlobalConstants.getNameFileDropRelease(user.getIdUser()), inputStream,
-				//	file.length(), null, null);
-		//		Log.i("DbExampleLog", "The uploaded file's rev is: " + response.rev);
+			 return "success";
+			}
+			else{
+				return "notConnect";
+			}
+	
 			    
-				return "success";
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
@@ -177,10 +174,17 @@ public class RilascioActivity extends ActivityBase {
 	        	if(result.equals("success")){
 	        		progress.hide();
 	        		showToast("Invio dati con successo !");
+	        		File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocal);
+	        		GlobalConstants.deleteDir(rootPath);
+	        		
 	        		logout();
 	        		goLogin();
 	        		
 	        	}
+	        	if(result.equals("notConnect")){
+	        		showToast("La connessione internet non è presente !");
+	        	}
+	        	progress.hide();
 	        }
 	        
 

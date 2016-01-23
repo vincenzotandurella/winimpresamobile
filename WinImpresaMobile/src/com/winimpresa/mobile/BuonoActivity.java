@@ -7,28 +7,6 @@ import java.util.Calendar;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.winimpresa.mobile.database.MonitoraggioTable;
 import com.winimpresa.mobile.database.MonitoraggioVociTable;
 import com.winimpresa.mobile.to.Monitoraggio;
@@ -198,7 +176,7 @@ public class BuonoActivity extends ActivityBase {
 
 			@Override
 			public void onClick(View v) {
-				showMessage("Funzionalità ancora non presente");
+				dialogMagazzino();
 			
 			}
 		});
@@ -370,6 +348,31 @@ public void dialogBox() {
 	    alertDialog.show();
 		
 	}
+
+
+public void dialogMagazzino(){
+	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Magazzino")
+           .setItems(R.array.operazionimagazzino, new DialogInterface.OnClickListener() {
+               public void onClick(DialogInterface dialog, int which) {
+               // The 'which' argument contains the index position
+               // of the selected item
+            	  
+            	   
+            	   Intent page_magazzino= new Intent(context, MagazzinoListActivity.class);
+            	   page_magazzino.putExtra(GlobalConstants.IDBUONO, current_id_buono);
+            	   if(which==0)
+            	   page_magazzino.putExtra("operazione","carico_buono");
+            	   else 
+            	   page_magazzino.putExtra("operazione","scarico_buono");
+            	   
+            	   startActivity(page_magazzino);
+
+           }
+    });
+    AlertDialog alertDialog = builder.create();
+    alertDialog.show();
+}
 	
 	public void showDialog(){
 		

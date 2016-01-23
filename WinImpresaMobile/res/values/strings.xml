@@ -55,7 +55,7 @@
         <item>XXXX-04</item>
     </string-array>
     <string-array name="andam">
-          <item></item>
+        <item></item>
         <item>Ottimo</item>
         <item>Soddisfacente</item>
         <item>Insoddisfacente</item>
@@ -64,6 +64,20 @@
         <item>Prodotto 1</item>
         <item>Prodotto 2</item>
         <item>Prodotto 3</item>
+    </string-array>
+    <string-array name="operazionimagazzino">
+        <item>Carico</item>
+        <item>Scarico</item>
+    </string-array>
+    <string-array name="unita">
+        <item>KG</item>
+        <item>LT</item>
+        <item>MC</item>
+        <item>ML</item>
+        <item>MQ</item>
+        <item>NR</item>
+        <item>ORE</item>
+        <item>PZ</item>
     </string-array>
 
     <string name="title_activity_settori">Settori</string>
@@ -188,5 +202,6 @@
     <string name="title_activity_dispositivi_list">Lista dispositivi</string>
     <string name="title_activity_scheda">SchedaActivity</string>
     <string name="title_activity_rilascio">Fine lavoro</string>
+    <string name="title_activity_magazzino_list">MagazzinoListActivity</string>
 
 </resources>

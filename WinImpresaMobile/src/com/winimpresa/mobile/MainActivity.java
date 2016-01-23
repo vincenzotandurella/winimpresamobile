@@ -17,6 +17,7 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.winimpresa.mobile.async.SyncLocalDatabase;
 import com.winimpresa.mobile.database.ManagementDB;
+import com.winimpresa.mobile.utility.Connectivity;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
 import android.animation.Animator;
@@ -50,7 +51,7 @@ public class MainActivity extends ActivityBase {
         
         super.onCreate(savedInstanceState, R.layout.activity_main);
     	
-        
+        gestionDropBox();
        
     	
     	
@@ -129,27 +130,7 @@ public class MainActivity extends ActivityBase {
     	sync.execute(param);
  
     }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-      /*  if (mDBApi.getSession().authenticationSuccessful()) {
-            try {
-                // Required to complete auth, sets the access token on the session
-                mDBApi.getSession().finishAuthentication();
-           
-                
-                String accessToken = mDBApi.getSession().getOAuth2AccessToken();
-                LongOperationDropBox a = new LongOperationDropBox();
-                a.execute();
-               
-            } catch (IllegalStateException e) {
-                Log.i("DbAuthLog", "Error authenticating", e);
-            }
-        }
-        */
-    }
     
     
     
@@ -167,21 +148,42 @@ public class MainActivity extends ActivityBase {
         @Override
         protected void onPostExecute(String result) {
         	
+        
+        	
+        	System.out.println("result " + result);
+            if(result.equals("notFileDrop")){
+        		
+        		 showToast("Il file non è presente sul sistema !");
+        		 progress.hide();
+        	}
+        	if(result.equals("oldFile")){
+        		
+        		showMessage("oldFile");
+        		 progress.hide();
+        	}
         	if(result.equals("success")){
         		
         		syncFile();
         	}
         	if(result.equals("error")){
+        		File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocal);
+        		GlobalConstants.deleteDir(rootPath);
+        		File rootPathScaricati = new File(Environment.getExternalStorageDirectory(), GlobalConstants.folderStorageFile);
+        		GlobalConstants.deleteDir(rootPathScaricati);
         		 showToast("Per oggi non hai più attività da fare ");
           		 progress.hide();
         		
         	}
         	if(result.equals("errorDrop")){
+        		File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocal);
+        		GlobalConstants.deleteDir(rootPath);
+        		File rootPathScaricati = new File(Environment.getExternalStorageDirectory(), GlobalConstants.folderStorageFile);
+        		GlobalConstants.deleteDir(rootPathScaricati);
        		 showToast("Il file delle tue attività non è presenete contatta l'amministratore");
          		 progress.hide();
        		
        	}
-        	
+        
         
         }
         
@@ -209,72 +211,121 @@ public class MainActivity extends ActivityBase {
     
     
     public String readFileDrop() {
-    	
     
     	
-    	gestionDropBox();
     	File rootPath = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderDropLocal);
-    	 
+    	
     	if(!rootPath.exists()) {
-           rootPath.mkdirs();
+            rootPath.mkdirs();
+            
+          }
+    	
+    	File rootPathScaricati = new File(Environment.getExternalStorageDirectory(), GlobalConstants.folderStorageFile);
+      	 
+    	if(!rootPathScaricati.exists()) {
+    		rootPathScaricati.mkdirs();
            
          }
+    	 String pathDrop = "/buoni_utenti/"+user.getIdUser();
+    	 DbxEntry.WithChildren listing = null;
+    	 DbxEntry child  = null;
     	
     	 
-    	File file = new File(rootPath,GlobalConstants.getNameFileDrop(user.getIdUser()));
-    	 if(!file.exists()) {
-    		 try {
-				file.createNewFile();
-			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-			
-				e.printStackTrace();
-			}
-    	 }
-    	 else{
-    		
-    		 return "error";
-    	 }
-    	 FileOutputStream outputStream = null;
-		try {
-			 outputStream = new FileOutputStream(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(GlobalConstants.getNameFileDrop(user.getIdUser()));
-    	
-    		
-    		try {
-				DbxEntry.File downloadedFile= client.getFile(GlobalConstants.readPathDropBox+GlobalConstants.getNameFileDrop(user.getIdUser()), null, outputStream);
-				System.out.println("Metadata: " + downloadedFile.toString());
-				return "success";
-    		} catch (DbxException e) {
-    			
-    			return "errorDrop";
-				// TODO Auto-generated catch block
+
+			try {
+				       listing = client.getMetadataWithChildren(pathDrop);  // recupero la lista dei file in drop
+				     
+				       if(listing!=null){
+				    	   if(listing.children.size()==0){
+				    		   return "notFileDrop";
+				    	   }
+				    	   child = listing.children.get(listing.children.size()-1);
+				    	   File fileStorage = new File(rootPathScaricati,child.name );
+				    	   File file = new File(rootPath, GlobalConstants.getNameFileDrop(user.getIdUser()));
+				    	   System.out.println(child.name);
+				    	   if(!fileStorage.exists()) {
+							   try {
+								   		fileStorage.createNewFile();
+								   		if(!file.exists()) {
+								   			file.createNewFile();
+								   		}
+								   		
+								   		FileOutputStream outputStream = null;
+										try {
+											 outputStream = new FileOutputStream(file);
+										} catch (FileNotFoundException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+											return "errorDrop";
+										}
+										try {
+											DbxEntry.File downloadedFile= client.getFile(pathDrop+"/"+child.name, null, outputStream);
+											
+											return "success";
+							    		} catch (DbxException e) {
+							    			
+							    			return "errorDrop";
+											// TODO Auto-generated catch block
+											
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											return "errorDrop";
+											
+										}
+								   		
+							   
+							   
+							   
+							   } catch (IOException e) {
+								// TODO Auto-generated catch block
+								   System.out.println(e.toString());
+								   return "errorDrop";
+							   }
+							   
+				    	   }
+				    	   else{
+				    		   // se il file è gia stato sviluppato
+				    		   return "oldFile";
+				    		   
+				    	   }
+				    	   
+				    	   
+				    	   
+				    	   
+				       }else{
+				    	   
+				    	   
+				    	   return "notFileDrop";
+				    	   
+				       }
 				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				return "errorDrop";
+				       } catch (DbxException e) {
+							// TODO Auto-generated catch block
+				    	   
+							e.printStackTrace();
+							return "errorDrop";
+							
+						}
+			
 				
-			}
-    		
-    		
-    		
+					
+					
+ 		
 			
-			
-    
-    		
     }
+    		
+    
     
     public void syncWithDrop(View view){
-    	progress.show();
-    	//mDBApi.getSession().startOAuth2Authentication(MainActivity.this);
-    	 LongOperationDropBox a = new LongOperationDropBox();
-         a.execute();
     	
+    	//mDBApi.getSession().startOAuth2Authentication(MainActivity.this);
+    	if(Connectivity.isConnected(context)){
+    		progress.show();
+    	LongOperationDropBox a = new LongOperationDropBox();
+         a.execute();
+    	}else{
+    		showToast("La connessione internet non è presente !");
+    	}
  
     }
     
@@ -290,6 +341,18 @@ public class MainActivity extends ActivityBase {
     		showToast("Questa è una demo");
     		setInitStrat();
     	}
+    	
+    	 	if(msg.equalsIgnoreCase("OldFile")){
+    		
+    		showToast("Stai ripendendo la vecchia attivita !");
+    		setInitStrat();
+    	}
+    	 	
+    	 	else 	if(msg.equalsIgnoreCase("ERROR")){
+        		
+        		showToast("Errore durate la lettura del file , riprova !");
+        		progress.hide();
+        	}
 	}
     
     public void setInitStrat(){

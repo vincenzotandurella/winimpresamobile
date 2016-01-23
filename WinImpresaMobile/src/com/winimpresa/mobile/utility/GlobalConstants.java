@@ -1,5 +1,6 @@
 package com.winimpresa.mobile.utility;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -9,19 +10,20 @@ public class GlobalConstants {
 
 	
 	public static final String  nameInfoUser = "info_user.xml";
-	public static final String  filedatabase = "db_scambioqrcode.db";
+	public static final String  filedatabase = "db_winimpresa.db";
 	public static final int     typeSyncFile = 2;    // 2 (visualizza tasto usb e internet) (1 solo internet ) (0 solo usb)
-	public static final String  folderLocalFile = "winImpresa"; // folder create localmente con il file all'interno;s
 	public static int   timeoutQrCode = 10; // secondi di tempo per recuperare il qrcode
 	public static String tabellaLog = "tabellaLog";
 	
 	public static String nomeappdropbox      = "/winimpresaapp";
-	public static String pathFolderDropLocal = "winimpresaapp/dumpattivita";  // path dove rilascio il file localmente
-	public static String pathFolderDropLocalReleaase = "winimpresaapp/dropBox/release";
+	public static String pathFolderDropLocal = "winimpresaapp/file_da_sviluppare";  // path dove rilascio il file localmente
+	public static String pathFolderLocal     = "winimpresaapp/";         // path dove sincronizzo localmente
+	public static String pathFolderDropLocalReleaase = "winimpresaapp/file_rilasciati/release";
 	public static String token_dropbox = "4-9Z_gq3yzAAAAAAAAAACAPYhXZ2Vz38zZJH850ZtqHY9Xp8PbfhSkCLmWMYT9mc";
 	
 	public static String readPathDropBox = "/buoni_utenti/";
 	
+	public static String folderStorageFile = "/winimpresaapp/file_scaricati_drop";
 	
 	
 	public static String QRCODECORROTTO = "1111";
@@ -56,7 +58,7 @@ public class GlobalConstants {
 		 String date = DATE_FORMAT.format(today);
 		
 		
-		return username+"_"+date+"_release.txt";
+		return username+"_"+date+".txt";
 	}
 	
 	
@@ -89,21 +91,28 @@ public class GlobalConstants {
 	
 	
 	public static String spiltDate(String date){
-		
+		if(date!=null){
 		String[] parts = date.split(" ");
 		String[] dates = parts[0].split("-");
-		
+		if(dates.length>0)
 		return dates[2]+"/"+dates[1]+"/"+dates[0];
-		
+		else
+			return"";
+		}
+		return"";
 	}
 	
 	public static String spiltTime(String date){
-		
+		if(date!=null){
 		String[] parts = date.split(" ");
 		String[] dates = parts[1].split(":");
 		
+		if(dates.length>0)
 		return dates[0]+":"+dates[1];
-		
+		else
+			return"";
+		}
+		return "00:00";
 	}
 	
 	
@@ -132,4 +141,14 @@ public class GlobalConstants {
 		return difference;
 	}
 	
+	
+	public static void deleteDir(File file) {
+	        File[] contents = file.listFiles();
+	        if (contents != null) {
+	            for (File f : contents) {
+	                deleteDir(f);
+	            }
+	        }
+	        file.delete();
+	    }
 }

@@ -245,6 +245,7 @@ public class DispositiviListActivity extends ActivityBase {
 			blackSfondo.animate().alpha(0.0f);
 			lisDispositivi.setEnabled(true);
 			lisDispositivi.animate().alpha(1.0f);
+			hideKeyboard(this);
 		}
 		viewdattagli = view;
 	}
@@ -497,6 +498,7 @@ public class DispositiviListActivity extends ActivityBase {
 						if (flag) {
 							showToast("Il dispositivo è stato cancellato");
 							dataDispositivi.remove(pos);
+							allMonitoriaggioVoci.remove(pos);
 							adapter.notifyDataSetChanged();
 
 						}

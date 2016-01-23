@@ -5,9 +5,28 @@ public class Articolo {
 	
 	private String codice;
 	private String descrizione;
+	private String id;
+	private String unita;
 	
 	
 	
+	
+	
+	
+	
+	
+	public String getUnita() {
+		return unita;
+	}
+	public void setUnita(String unita) {
+		this.unita = unita;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getCodice() {
 		return codice;
 	}

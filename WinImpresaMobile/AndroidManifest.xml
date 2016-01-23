@@ -103,7 +103,12 @@
         <activity
             android:name=".RilascioActivity"
             android:label="@string/title_activity_rilascio"
-             android:screenOrientation="portrait"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".MagazzinoListActivity"
+            android:label="@string/title_activity_magazzino_list"
+            android:screenOrientation="portrait"
              >
         </activity>
     </application>

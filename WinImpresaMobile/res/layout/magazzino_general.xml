@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"     
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:padding="10dip" >
+    
+      <RelativeLayout 
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         
+         >
+         <ImageView 
+             android:src="@drawable/edit"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+             android:layout_alignParentRight="true"
+             />
+         
+     </RelativeLayout>
+    
+    
+     
+     <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            
+            
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:padding="3dp"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Codice"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/codiceMagazzino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+            
+              <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:padding="3dp"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Articolo/Desc"
+                    android:textColor="#fff"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/descrizione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="titolo"
+                    android:textColor="#000"
+                    android:textSize="13sp" >
+                </TextView>
+            </TableRow>
+            
+           
+            
+        </TableLayout>
+    
+    
+
+</RelativeLayout>
