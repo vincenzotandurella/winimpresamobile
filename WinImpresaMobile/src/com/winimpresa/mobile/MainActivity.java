@@ -242,7 +242,7 @@ public class MainActivity extends ActivityBase {
 				    	   child = listing.children.get(listing.children.size()-1);
 				    	   File fileStorage = new File(rootPathScaricati,child.name );
 				    	   File file = new File(rootPath, GlobalConstants.getNameFileDrop(user.getIdUser()));
-				    	   System.out.println(child.name);
+				    	
 				    	   if(!fileStorage.exists()) {
 							   try {
 								   		fileStorage.createNewFile();

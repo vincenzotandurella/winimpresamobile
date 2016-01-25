@@ -82,6 +82,24 @@ public class MonitoraggioTable  {
 		
 	}
 	
+	
+	public  int selectAllMonitoraggioStatus(){
+
+		String selectQuery = 		"SELECT * "
+								+   "FROM " + TABLE_NAME +  " WHERE EVASO = 0 ";
+							
+
+		
+		Cursor			cursor	= ourDatabase.rawQuery(selectQuery, null);
+	
+	
+		
+		
+		
+	   return cursor.getCount();
+		
+	}
+	
 
 	public boolean updateStatoMonitoraggio (Monitoraggio mon){
 		
@@ -98,7 +116,7 @@ public class MonitoraggioTable  {
 							
 							  + "WHERE  id_Monitoraggio='"+mon.getId_monitoraggio()+"'"; 
 				
-	
+      ourDatabase.execSQL(GlobalConstants.getQueryLog(updateQuery));
       ourDatabase.execSQL(updateQuery);
   
   

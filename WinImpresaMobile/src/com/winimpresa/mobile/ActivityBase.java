@@ -1,5 +1,8 @@
 package com.winimpresa.mobile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -20,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -38,6 +42,7 @@ public class ActivityBase extends Activity implements ActivityInterface{
 	protected void onCreate(Bundle savedInstanceState, int layoutId) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(layoutId);
+	        user = new User();
 	        this.readUser();
 	        context = this;
 	        this.openDatabase();
@@ -50,15 +55,27 @@ public class ActivityBase extends Activity implements ActivityInterface{
 	    
 	   //Leggo il file per le informazione dell'untente in sessione 
 	   private void readUser(){
+		   File filexml = new File(Environment.getExternalStorageDirectory(), GlobalConstants.nameInfoUser);
 		   
-		    try {
-				ReadXmlUser xmlUser = new	ReadXmlUser(getAssets().open(GlobalConstants.nameInfoUser));
-				user = xmlUser.readInfoUser();
+		   if(filexml.exists()){
+			   try {
+				FileInputStream inputStream = new FileInputStream(filexml);
+			
+			
+					  //getAssets().open(GlobalConstants.nameInfoUser)
+						ReadXmlUser xmlUser = new	ReadXmlUser(inputStream);
+						user = xmlUser.readInfoUser();
+						
 				
-			} catch (IOException e) {
+			   
+			   } catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		   }
+		   
+		   
+		  
 	   } 
 	   
 	   

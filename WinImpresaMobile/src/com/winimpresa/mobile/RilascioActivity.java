@@ -10,10 +10,13 @@ import java.io.IOException;
 import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxWriteMode;
 import com.winimpresa.mobile.async.ReleaseLocalDatabase;
+import com.winimpresa.mobile.database.MonitoraggioTable;
 import com.winimpresa.mobile.utility.Connectivity;
 import com.winimpresa.mobile.utility.GlobalConstants;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,13 +31,15 @@ public class RilascioActivity extends ActivityBase {
 	private Button rilascio;
 	public ProgressDialog progress;
 	public int startRilascio=0;
+	private MonitoraggioTable mon;
+	private AlertDialog.Builder alertDialogBuilder;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState,R.layout.activity_rilascio);
-		
+		 alertDialogBuilder 		= new AlertDialog.Builder(this);
 		rilascio = (Button) findViewById(R.id.rilascio);
 		  gestionDropBox();
-		  
+		  mon = new MonitoraggioTable(context, db);
 		  progress = new ProgressDialog(context);
 		  progress.setMessage("Copia operazione in corso...");
 	}
@@ -59,13 +64,25 @@ public class RilascioActivity extends ActivityBase {
 	}
 	
 	   public void syncWithDrop(View view){
-		   progress.show();
-	    ReleaseLocalDatabase rel = new ReleaseLocalDatabase(db, context, progress, this);
-	    String[] param = {user.getIdUser()};
-        rel.execute(param);
+		   
+		   if(mon.selectAllMonitoraggioStatus() >0){
+			   dialogBoxStop();
+		   }
+		   else{
+			   startSync(); 
+		   }
+		
         
 	 
 	    }
+	   
+	   
+	   public void startSync(){
+		   progress.show();
+		    ReleaseLocalDatabase rel = new ReleaseLocalDatabase(db, context, progress, this);
+		    String[] param = {user.getIdUser()};
+	        rel.execute(param);
+	   }
 	   
 	   public void tornaAiBuoni(View view){
 	    	
@@ -88,7 +105,33 @@ public class RilascioActivity extends ActivityBase {
 
 	   }
 	
-	
+		public void dialogBoxStop() {
+
+			
+			alertDialogBuilder.setMessage("Nelle attività ci sono dei buoni non evasi vuoi cimunque continuare? ");
+			alertDialogBuilder.setPositiveButton("Continua",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+
+							 startSync();
+
+						}
+					});
+			alertDialogBuilder.setNegativeButton("Annulla",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+
+						}
+					});
+
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+		}
 	
 	public String createFileDump(){
 		gestionDropBox();
