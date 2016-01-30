@@ -108,7 +108,7 @@ public class RilascioActivity extends ActivityBase {
 		public void dialogBoxStop() {
 
 			
-			alertDialogBuilder.setMessage("Nelle attività ci sono dei buoni non evasi vuoi cimunque continuare? ");
+			alertDialogBuilder.setMessage("Nelle attività ci sono dei buoni non evasi vuoi comunque continuare? ");
 			alertDialogBuilder.setPositiveButton("Continua",
 					new DialogInterface.OnClickListener() {
 

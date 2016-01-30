@@ -22,12 +22,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Spinner;
 
 public class DispositiviListActivity extends ActivityBase {
 	private static final String TAG_LOG = MainActivity.class.getName();
@@ -47,12 +49,18 @@ public class DispositiviListActivity extends ActivityBase {
 	private Button qrcode;
 	private Button goScheda;
 	private Button salva;
-	private EditText settore;
-	private EditText ambiente;
-	private EditText tiposDisp;
-	private EditText codDisp;
+	private Spinner settore;
+	private Spinner ambiente;
+	private Spinner tiposDisp;
+	private Spinner codDisp;
 	private EditText siglaDisp;
 	private InitTask initTask;
+	private String [] ambienteContainer;
+	private String [] settoriContainer;
+	private String [] tipoDispContainer;
+	private String [] dispositiviContainer;
+	
+	
 	String[] from = { "ambiente", "settore", "tipoDisp", "codDisp", "siglaDisp" };
 	int[] to = { R.id.ambiente, R.id.settore, R.id.tipoDisp, R.id.codDisp,
 			R.id.siglaDisp };
@@ -80,20 +88,42 @@ public class DispositiviListActivity extends ActivityBase {
 
         alertDialogBuilder 		= new AlertDialog.Builder(this);
 		tableVoci 			 	= new MonitoraggioVociTable(context, db);
+		ambienteContainer       = tableVoci.getTaAmbiente(ambienteContainer);
+		settoriContainer        = tableVoci.getSettori(settoriContainer);
+		tipoDispContainer        = tableVoci.getTipoDispositivo(tipoDispContainer);
+		dispositiviContainer        = tableVoci.getDispositivi(dispositiviContainer);
 		allMonitoriaggioVoci 	= tableVoci.getAllDispoisitivi(allMonitoriaggioVoci, current_id_buono);
 		lisDispositivi 			= (ListView) findViewById(R.id.listViewDispositivi);
 		blackSfondo 			= (View) findViewById(R.id.black);
 		dettaglioDispositivo 	= (LinearLayout) findViewById(R.id.dettaglioDispositivo);
-		ambiente 				= (EditText) findViewById(R.id.ambiente);
-		settore 				= (EditText) findViewById(R.id.settore);
-		tiposDisp 				= (EditText) findViewById(R.id.tipoDisp);
-		codDisp 				= (EditText) findViewById(R.id.codDisp);
+		ambiente 				= (Spinner) findViewById(R.id.ambiente);
+		settore 				= (Spinner) findViewById(R.id.settore);
+		tiposDisp 				= (Spinner) findViewById(R.id.tipoDisp);
+		codDisp 				= (Spinner) findViewById(R.id.codDisp);
 		siglaDisp 				= (EditText) findViewById(R.id.siglaDisp);
 		qrcode 					= (Button) findViewById(R.id.qrcode);
 		goScheda 			    = (Button) findViewById(R.id.goscheda);
 		salva 					= (Button) findViewById(R.id.salva);
 		dataDispositivi 		= new ArrayList<HashMap<String, Object>>();
 
+		
+		 ArrayAdapter<String> adapterAmbiente = new ArrayAdapter<String>(this,
+		            android.R.layout.simple_spinner_dropdown_item, ambienteContainer);
+		 ambiente.setAdapter(adapterAmbiente);
+		 
+		 ArrayAdapter<String> adapterSettori = new ArrayAdapter<String>(this,
+		            android.R.layout.simple_spinner_dropdown_item, settoriContainer);
+		 settore.setAdapter(adapterSettori);
+		 
+		 
+		 ArrayAdapter<String> adapterTipoDisp = new ArrayAdapter<String>(this,
+		            android.R.layout.simple_spinner_dropdown_item, tipoDispContainer);
+		 tiposDisp.setAdapter(adapterTipoDisp);
+		 
+		 ArrayAdapter<String> adapterDispositivi = new ArrayAdapter<String>(this,
+		            android.R.layout.simple_spinner_dropdown_item, dispositiviContainer);
+		 codDisp.setAdapter(adapterDispositivi);
+		
 		
 		
 		for (int i = 0; i < allMonitoriaggioVoci.size(); i++) {
@@ -253,13 +283,15 @@ public class DispositiviListActivity extends ActivityBase {
 	
 	public void settaParamDettagli() {
 
-		ambiente.setText(allMonitoriaggioVoci.get(position_current)
-				.getAmbiente());
-		settore.setText(allMonitoriaggioVoci.get(position_current).getSettore());
-		tiposDisp.setText(allMonitoriaggioVoci.get(position_current)
-				.getErogatore());
-		codDisp.setText(allMonitoriaggioVoci.get(position_current)
-				.getCod_dispositivo());
+		
+		ambiente.setSelection( Arrays.asList(ambienteContainer).indexOf(allMonitoriaggioVoci.get(position_current)
+				.getAmbiente()),true);
+		settore.setSelection( Arrays.asList(settoriContainer).indexOf(allMonitoriaggioVoci.get(position_current)
+				.getSettore()),true);
+		tiposDisp.setSelection( Arrays.asList(tipoDispContainer).indexOf(allMonitoriaggioVoci.get(position_current)
+				.getErogatore()),true);
+		codDisp.setSelection( Arrays.asList(dispositiviContainer).indexOf(allMonitoriaggioVoci.get(position_current)
+				.getCod_dispositivo()),true);
 		siglaDisp.setText(allMonitoriaggioVoci.get(position_current)
 				.getSigla_dispositivo());
 
@@ -269,21 +301,21 @@ public class DispositiviListActivity extends ActivityBase {
 	public void saveInformationLocal() {
 
 		dataDispositivi.get(position_current).put("ambiente",
-				ambiente.getText().toString());
+				ambiente.getSelectedItem().toString());
 		allMonitoriaggioVoci.get(position_current).setAmbiente(
-				ambiente.getText().toString());
+				ambiente.getSelectedItem().toString());
 		dataDispositivi.get(position_current).put("settore",
-				settore.getText().toString());
+				settore.getSelectedItem().toString());
 		allMonitoriaggioVoci.get(position_current).setSettore(
-				settore.getText().toString());
+				settore.getSelectedItem().toString());
 		dataDispositivi.get(position_current).put("tipoDisp",
-				tiposDisp.getText().toString());
+				tiposDisp.getSelectedItem().toString());
 		allMonitoriaggioVoci.get(position_current).setErogatore(
-				tiposDisp.getText().toString());
+				tiposDisp.getSelectedItem().toString());
 		dataDispositivi.get(position_current).put("codDisp",
-				codDisp.getText().toString());
+				codDisp.getSelectedItem().toString());
 		allMonitoriaggioVoci.get(position_current).setCod_dispositivo(
-				codDisp.getText().toString());
+				codDisp.getSelectedItem().toString());
 		dataDispositivi.get(position_current).put("siglaDisp",
 				siglaDisp.getText().toString());
 		allMonitoriaggioVoci.get(position_current).setSigla_dispositivo(

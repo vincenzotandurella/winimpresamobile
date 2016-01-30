@@ -296,6 +296,25 @@ public class MonitoraggioVociTable extends ConnectionDb {
 		return tipoDisp;
 	}
 	
+	public String[] getDispositivi(String[] dispositivi) {
+		String selectQuery = " SELECT *   FROM dispositivi ";
+
+		Cursor cursor = ourDatabase.rawQuery(selectQuery, null);
+		dispositivi = new String[cursor.getCount()+1];
+		int i = 1;
+		dispositivi[0] = "/";
+
+		while (cursor.moveToNext()) {
+			dispositivi[i] = cursor
+					.getString(cursor.getColumnIndex("Descrizione"));
+
+			i++;
+		}
+
+		cursor.close();
+		return dispositivi;
+	}
+	
 	
 	public String[] getTaAttivita(String[] attivita) {
 		String selectQuery = " SELECT *  " + " FROM taattivita";
@@ -316,6 +335,45 @@ public class MonitoraggioVociTable extends ConnectionDb {
 		return attivita;
 	}
 
+	
+	public String[] getTaAmbiente(String[] ambiente) {
+		String selectQuery = " SELECT *  " + " FROM taAmbiente";
+
+		Cursor cursor = ourDatabase.rawQuery(selectQuery, null);
+		ambiente = new String[cursor.getCount()+1];
+		int i = 1;
+		ambiente[0] = "/";
+
+		while (cursor.moveToNext()) {
+			ambiente[i] = cursor
+					.getString(cursor.getColumnIndex("Descrizione"));
+
+			i++;
+		}
+
+		cursor.close();
+		return ambiente;
+	}
+	
+	public String[] getSettori(String[] settori) {
+		String selectQuery = " SELECT *  " + " FROM settori";
+
+		Cursor cursor = ourDatabase.rawQuery(selectQuery, null);
+		settori = new String[cursor.getCount()+1];
+		int i = 1;
+		settori[0] = "/";
+
+		while (cursor.moveToNext()) {
+			settori[i] = cursor
+					.getString(cursor.getColumnIndex("Descrizione"));
+
+			i++;
+		}
+
+		cursor.close();
+		return settori;
+	}
+	
 	public String[] getTaStatoEsca(String[] statoEsca) {
 		String selectQuery = " SELECT *  " + " FROM TaStatoEsca";
 
