@@ -632,7 +632,7 @@ public class DispositiviListActivity extends ActivityBase {
 			try {
 				Thread.sleep(GlobalConstants.timeoutQrCode * 1000);
 			} catch (Exception e) {
-				System.out.println(e);
+				
 			}
 			return null;
 

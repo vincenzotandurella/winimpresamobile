@@ -46,12 +46,14 @@ public class SchedaActivity extends ActivityBase {
        	   current_id_buono = bundle.getLong(GlobalConstants.IDBUONO);
        	   type_scheda 		= bundle.getInt(GlobalConstants.TYPESCHEDA);
        	   current_id_voce 	= bundle.getInt(GlobalConstants.IDVOCE);
+       	  
 		}
 		
 		
 		
 		
 		if (savedInstanceState == null) {
+			
 			switch (type_scheda) {
 			case 1:
 				ab.setTitle("Buono roditore erogatore");

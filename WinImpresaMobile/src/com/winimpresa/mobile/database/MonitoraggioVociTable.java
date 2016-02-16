@@ -413,7 +413,7 @@ public class MonitoraggioVociTable extends ConnectionDb {
 	}
 
 	public boolean updateMonitoraggio(MonitoriaggioVoci mon, int tipo) {
-		System.out.println(mon.getProdottoSost());
+		
 		String updateQuery = "";
 		try {
 
@@ -513,7 +513,7 @@ public class MonitoraggioVociTable extends ConnectionDb {
 			}
 			
 		
-			System.out.println(updateQuery);
+			
 			ourDatabase.execSQL(updateQuery);
 			ourDatabase.execSQL(GlobalConstants.getQueryLog(updateQuery));
 
@@ -572,7 +572,7 @@ public class MonitoraggioVociTable extends ConnectionDb {
 			
 			ourDatabase.execSQL(insertQuery);
 			ourDatabase.execSQL(GlobalConstants.getQueryLog(insertQuery));
-			System.out.println("query "+insertQuery);
+			
 			
 			return mon;
 

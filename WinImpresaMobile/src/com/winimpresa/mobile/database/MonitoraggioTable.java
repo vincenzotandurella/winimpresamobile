@@ -249,7 +249,7 @@ public boolean aggiungiCaricoScarico (Magazzino maga, String operazione){
     
 	}
 	catch(Exception e){
-		   System.out.println(e);
+		
 		return false;
 	}
 }
@@ -286,7 +286,7 @@ public boolean updateCaricoScarico (Magazzino maga, String operazione){
     
 	}
 	catch(Exception e){
-		   System.out.println(e);
+		  
 		return false;
 	}
 }

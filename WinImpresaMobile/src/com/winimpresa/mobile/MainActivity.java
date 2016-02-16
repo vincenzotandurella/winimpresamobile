@@ -24,6 +24,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,7 +43,7 @@ public class MainActivity extends ActivityBase {
 	public ManagementDB  mdb;
 	public Button start;
 	public LinearLayout viewTwobutton;
-	
+
 	
 	
 
@@ -109,6 +110,16 @@ public class MainActivity extends ActivityBase {
 			    					+  "<br><i> "+user.getIdUser()  +"</i>"
         							)
         			);
+        
+        TextView textversion = (TextView) findViewById(R.id.versionApp);
+        try {
+			textversion.setText("Versione " +context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName
+						);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
       
         
       }
@@ -125,7 +136,7 @@ public class MainActivity extends ActivityBase {
     
     public void syncWithLocal(View view){
   
-    	SyncLocalDatabase sync  = new SyncLocalDatabase(db,context,progress,this);
+    	SyncLocalDatabase sync  = new SyncLocalDatabase(db,context,progress,this,client);
     	String[] param = {"local",user.getIdUser()};
     	sync.execute(param);
  
@@ -150,7 +161,7 @@ public class MainActivity extends ActivityBase {
         	
         
         	
-        	System.out.println("result " + result);
+        	
             if(result.equals("notFileDrop")){
         		
         		 showToast("Il file non è presente sul sistema !");
@@ -201,7 +212,7 @@ public class MainActivity extends ActivityBase {
    
     
     private void syncFile(){
-    	SyncLocalDatabase sync  = new SyncLocalDatabase(db,context,progress,this);
+    	SyncLocalDatabase sync  = new SyncLocalDatabase(db,context,progress,this,client);
     	String[] param = {"drop",user.getIdUser()};
     	
     	sync.execute(param);
@@ -219,6 +230,22 @@ public class MainActivity extends ActivityBase {
             rootPath.mkdirs();
             
           }
+      File rootPathLOG = new File(Environment.getExternalStorageDirectory(), GlobalConstants.pathFolderLocal+"/LOG");
+    	
+    	if(!rootPathLOG.exists()) {
+    		rootPathLOG.mkdirs();
+    		
+    		 File fileLOG = new File(rootPathLOG,"logs.txt");
+    		 if(!fileLOG.exists()) {
+    			 try {
+					fileLOG.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		   		}
+            
+          }
     	
     	File rootPathScaricati = new File(Environment.getExternalStorageDirectory(), GlobalConstants.folderStorageFile);
       	 
@@ -233,12 +260,14 @@ public class MainActivity extends ActivityBase {
     	 
 
 			try {
-				       listing = client.getMetadataWithChildren(pathDrop);  // recupero la lista dei file in drop
+				       listing = client.getMetadataWithChildren(pathDrop,false);  // recupero la lista dei file in drop
 				     
 				       if(listing!=null){
 				    	   if(listing.children.size()==0){
 				    		   return "notFileDrop";
 				    	   }
+				    	  
+				    	   
 				    	   child = listing.children.get(listing.children.size()-1);
 				    	   File fileStorage = new File(rootPathScaricati,child.name );
 				    	   File file = new File(rootPath, GlobalConstants.getNameFileDrop(user.getIdUser()));
@@ -278,7 +307,7 @@ public class MainActivity extends ActivityBase {
 							   
 							   } catch (IOException e) {
 								// TODO Auto-generated catch block
-								   System.out.println(e.toString());
+								  
 								   return "errorDrop";
 							   }
 							   
@@ -338,7 +367,7 @@ public class MainActivity extends ActivityBase {
     	if(msg.equalsIgnoreCase("OK")){
     		progress.hide();
     		showToast("Database syncronizzato con successo ...");
-    		showToast("Questa è una demo");
+    	
     		setInitStrat();
     	}
     	

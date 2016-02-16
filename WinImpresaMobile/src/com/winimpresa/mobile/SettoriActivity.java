@@ -108,7 +108,7 @@ public class SettoriActivity extends ActivityBase {
 	}
 	
 	public void setCodQRcode(String result){
-		System.out.println("QUIIII");
+		
 	
 	     View view = viewFlipper.getCurrentView();
 	     siglaDisp     = (EditText) view.findViewById(R.id.siglaDisp);
@@ -201,57 +201,11 @@ public class SettoriActivity extends ActivityBase {
 	            	
 	            	setCodQRcode(intent.getStringExtra("SCAN_RESULT"));
 	            } else if (resultCode == RESULT_CANCELED) {
-	            	//tvStatus.setText("Press a button to start a scan.");
-	                //tvResult.setText("Scan cancelled.");
+	            	
 	            }
 	        }
 	    }
 	    
 
-	/*
-   public boolean onTouchEvent(MotionEvent touchevent) {
-	    	
-	   
-	    switch (touchevent.getAction()) {
-	        
-	        case MotionEvent.ACTION_DOWN: 
-	        	lastX = touchevent.getX();
-	            break;
-	        case MotionEvent.ACTION_UP: 
-	            float currentX = touchevent.getX();
-	            System.out.println();
-	            // Handling left to right screen swap.
-	            if (lastX < currentX) {
-	            	
-	            	// If there aren't any other children, just break.
-	                if (viewFlipper.getDisplayedChild() == 0)
-	                	break;
-	                
-	                // Next screen comes in from left.
-	                viewFlipper.setInAnimation(this, R.anim.slide_in_from_left);
-	                // Current screen goes out from right. 
-	                viewFlipper.setOutAnimation(this, R.anim.slide_out_to_right);
-	                
-	                // Display next screen.
-	                viewFlipper.showNext();
-	             }
-	                                     
-	            // Handling right to left screen swap.
-	             if (lastX > currentX) {
-	            	 
-	            	
-	            		 
-	            	 // Next screen comes in from right.
-	            	 viewFlipper.setInAnimation(this, R.anim.slide_in_from_right);
-	            	// Current screen goes out from left. 
-	            	 viewFlipper.setOutAnimation(this, R.anim.slide_out_to_left);
-	                 
-	            	// Display previous screen.
-	                 viewFlipper.showPrevious();
-	             }
-	             break;
-	    	 }
-	         return false;
-	    }
-	   */ 
+	
 }

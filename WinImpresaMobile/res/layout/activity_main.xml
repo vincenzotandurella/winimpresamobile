@@ -28,6 +28,17 @@
          android:shadowDy="2"
        android:shadowRadius="0.01"
         android:text="@string/benvenute" />
+      <TextView
+        android:id="@+id/versionApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="1dp"
+        android:textSize="12sp"
+        android:textColor="#000"
+        android:gravity="center"
+       
+        
+        />
     
     <TextView
         android:id="@+id/infoUser"

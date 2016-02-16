@@ -65,7 +65,7 @@ public class Tipo7 extends Fragment  {
 	            android.R.layout.simple_spinner_dropdown_item, prodottoSostall);
 	    spinnerProdottoSost.setAdapter(adapterProdotti);
 	     
-	    System.out.println(monitoraggio.getStatoEsca());
+	  
 	    spinnerAttivita.setSelection(Arrays.asList(attivitaall).indexOf(monitoraggio.getAttivita()),true);
 	    spinnerStatoEsca.setSelection( Arrays.asList(statoEscaall).indexOf(monitoraggio.getStatoEsca()),true);
 	    spinnerProdottoSost.setSelection( Arrays.asList(prodottoSostall).indexOf(monitoraggio.getProdottoSost()),true);

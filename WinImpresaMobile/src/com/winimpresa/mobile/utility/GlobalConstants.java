@@ -9,21 +9,23 @@ import java.util.Date;
 public class GlobalConstants {
 
 	
+	public static final String  versionApp = "1_0_1";
 	public static final String  nameInfoUser = "info_user.xml";
-	public static final String  filedatabase = "db_winimpresa.db";
+	public static final String  filedatabase = "db_winimpresa"+versionApp+".db";
 	public static final int     typeSyncFile = 2;    // 2 (visualizza tasto usb e internet) (1 solo internet ) (0 solo usb)
 	public static int   timeoutQrCode = 10; // secondi di tempo per recuperare il qrcode
 	public static String tabellaLog = "tabellaLog";
 	
 	public static String nomeappdropbox      = "/winimpresaapp";
-	public static String pathFolderDropLocal = "winimpresaapp/file_da_sviluppare";  // path dove rilascio il file localmente
-	public static String pathFolderLocal     = "winimpresaapp/";         // path dove sincronizzo localmente
-	public static String pathFolderDropLocalReleaase = "winimpresaapp/file_rilasciati/release";
-	public static String token_dropbox = "4-9Z_gq3yzAAAAAAAAAACAPYhXZ2Vz38zZJH850ZtqHY9Xp8PbfhSkCLmWMYT9mc";
+	
+	public static String pathFolderDropLocal = "winimpresaapp"+versionApp+"/file_da_sviluppare";  // path dove rilascio il file localmente
+	public static String pathFolderLocal     = "winimpresaapp"+versionApp+"/";         // path dove sincronizzo localmente
+	public static String pathFolderDropLocalReleaase = "winimpresaapp"+versionApp+"/file_rilasciati/release";
+	public static String token_dropbox = "4-9Z_gq3yzAAAAAAAAAAEOAvQmyM3GFA6WJgAT5K1CL8iif2sBHhBleeoYbp1_tz";
 	
 	public static String readPathDropBox = "/buoni_utenti/";
 	
-	public static String folderStorageFile = "/winimpresaapp/file_scaricati_drop";
+	public static String folderStorageFile = "/winimpresaapp"+versionApp+"/file_scaricati_drop";
 	
 	
 	public static String QRCODECORROTTO = "1111";

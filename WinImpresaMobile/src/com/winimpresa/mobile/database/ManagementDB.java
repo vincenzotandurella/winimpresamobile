@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 public class ManagementDB {
@@ -176,6 +178,23 @@ public class ManagementDB {
 
 	}
 
+	private void writeLOG(String log){
+		Writer writer = null;
+
+		try {
+		    writer = new BufferedWriter(new OutputStreamWriter(
+		          new FileOutputStream(Environment
+							.getExternalStorageDirectory().getAbsolutePath()
+							+ File.separator
+							+GlobalConstants.pathFolderLocal+"/LOG/logs.txt"), "utf-8"));
+		    writer.write(log);
+		} catch (IOException ex) {
+			Log.d("Errore scrivi", ex.toString());
+		} finally {
+		   try {writer.close();} catch (Exception ex) {/*ignore*/}
+		}
+	}
+	
 	private boolean insertData() {
 
 		String line;
@@ -191,9 +210,10 @@ public class ManagementDB {
 			InputStream in = file;
 			deleteQuery("Monitoraggio");
 			deleteQuery("Monitoraggio_voci");
+			deleteQuery("Agenti");
 			if (in != null) {
 				// prepare the file for reading
-				InputStreamReader input = new InputStreamReader(in);
+				InputStreamReader input = new InputStreamReader(in,"UTF8");
 				BufferedReader buffreader = new BufferedReader(input);
 
 				while ((line = buffreader.readLine()) != null) {
@@ -202,15 +222,17 @@ public class ManagementDB {
 							|| line.indexOf("SET") == 0) {
 						continue;
 					}
-
+						
 					if (line.contains(";")) {
 						incompleteLine = incompleteLine + line;
 						
 						try {
-							System.out.println(incompleteLine);
+							Log.d("STRINGA OK", incompleteLine);
 							ourDatabase.execSQL(incompleteLine);
 						} catch (Exception e) {
 							// TODO: handle exception
+							   writeLOG( e.toString());
+								
 							return false;
 						}
 						
@@ -275,7 +297,15 @@ public class ManagementDB {
 					if (line.contains(";")) {
 						incompleteLine = incompleteLine + line;
 						
-						ourDatabase.execSQL(incompleteLine);
+						try {
+							
+							ourDatabase.execSQL(incompleteLine);
+						} catch (Exception e) {
+							// TODO: handle exception
+							   writeLOG( e.toString());
+								
+							return false;
+						}
 						incompleteLine = "";
 
 					} else {
