@@ -82,6 +82,61 @@ public class MonitoraggioTable  {
 		
 	}
 	
+	public  ArrayList<Monitoraggio> selectAllMonitoraggioData(ArrayList<Monitoraggio> listMonitoriaggio, String data){
+
+		String selectQuery = 		"SELECT DISTINCT  id_Monitoraggio,Nominativo,Tipo_Scheda,Nom2,applicazione,commessa_n,Area,citta,data_Monitoraggio,Tipo_Dispositivo,evaso, Andamento  "
+								+   "FROM " + TABLE_NAME +  " where data_Monitoraggio >= '"+data+"' ";
+							//	+ "inner  join Monitoraggio_voci mv on (m.id_Monitoraggio=mv.cod_Mon) ";
+
+		
+		Cursor			cursor	= ourDatabase.rawQuery(selectQuery, null);
+	
+	
+		while (cursor.moveToNext()) {
+			Monitoraggio monit= new Monitoraggio();
+			
+		
+			monit.setId_monitoraggio(( cursor.getInt(cursor.getColumnIndex("id_Monitoraggio"))));
+			monit.setTipo_scheda(( cursor.getInt(cursor.getColumnIndex("Tipo_Scheda"))));
+			monit.setCliente(( cursor.getString(cursor.getColumnIndex("Nominativo"))));
+			monit.setCliente2(( cursor.getString(cursor.getColumnIndex("Nom2"))));
+			monit.setDescrizione(( cursor.getString(cursor.getColumnIndex("applicazione"))));
+			monit.setCommessa_n(( cursor.getInt(cursor.getColumnIndex("commessa_n"))));
+			monit.setArea(( cursor.getString(cursor.getColumnIndex("Area"))));
+			monit.setCitta(( cursor.getString(cursor.getColumnIndex("citta"))));
+			monit.setData(GlobalConstants.spiltDate(( cursor.getString(cursor.getColumnIndex("data_Monitoraggio")))));
+			monit.setSigla(( cursor.getString(cursor.getColumnIndex("Tipo_Dispositivo"))));
+			monit.setAndamento(( cursor.getString(cursor.getColumnIndex("Andamento"))));
+			
+			int ev =  cursor.getInt(cursor.getColumnIndex("evaso"));
+			
+			switch (ev) {
+			case 0:
+				monit.setEvaso(R.drawable.zero);
+				monit.setStatoEvaso(false);
+				break;
+
+			case 1:
+				monit.setEvaso(R.drawable.uno);
+				monit.setStatoEvaso(true);
+				break;
+			default:
+				break;
+			}
+			
+			
+		
+			
+			
+			listMonitoriaggio.add(monit);
+		     
+		}
+		cursor.close();
+		
+	   return listMonitoriaggio;
+		
+	}
+	
 	
 	public  int selectAllMonitoraggioStatus(){
 

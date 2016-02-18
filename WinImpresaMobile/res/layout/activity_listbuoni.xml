@@ -6,7 +6,50 @@
     android:background="#fff"
     tools:context="com.winimpresa.mobile.BuoniListActivity" >
 
-    <ListView
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        
+        >
+         <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
+         <ImageButton 
+             android:id="@+id/buttonData"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+			android:src="@drawable/calendario"
+			android:background="@android:color/transparent"
+			android:layout_weight="1"
+		            
+            />
+        <EditText 
+            android:id="@+id/labelData"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:editable="false"
+            
+             android:layout_weight="1"
+            />
+        <ImageButton 
+             android:id="@+id/reloadList"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+			android:src="@android:drawable/ic_delete"
+			android:background="@android:color/transparent"
+			android:layout_weight="1"
+		            
+            />
+       
+        </LinearLayout>
+          <ListView
+                android:layout_weight="1"
         android:id="@+id/buoniListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,6 +62,10 @@
          
         >
     </ListView>
+        
+    </LinearLayout>
+    
+  
 
     <ImageButton
         android:id="@+id/searchImageButton"

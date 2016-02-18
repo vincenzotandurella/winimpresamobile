@@ -91,6 +91,28 @@ public class GlobalConstants {
 		
 	}
 	
+	public static String dataPerFiltro(int anno,int mese,int giorno){
+			String giorno1= "";
+			
+			String mese1 ="";
+			if(giorno<=9){
+				giorno1="0"+giorno;
+			}
+			else{
+				giorno1=""+giorno;
+			}
+			if(mese<=9){
+				mese1="0"+mese;
+			}
+			else{
+				mese1= ""+mese;
+			}
+			
+			return anno+"-"+mese1+"-"+giorno1+" 00:00:00";
+			
+			
+	}
+	
 	
 	public static String spiltDate(String date){
 		if(date!=null){

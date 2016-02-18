@@ -239,10 +239,8 @@ public class BuonoActivity extends ActivityBase {
   }
    
    public void backList(){
-	   NavUtils.navigateUpFromSameTask(this);
-	   
-		 overridePendingTransition( R.anim.slide_in_left,R.anim.slide_out_right);
-		 finish();
+	   finish();
+		 
    }
    
    

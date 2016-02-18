@@ -1,6 +1,7 @@
 package com.winimpresa.mobile;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -11,6 +12,8 @@ import com.winimpresa.mobile.utility.GlobalConstants;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +23,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
@@ -33,8 +40,18 @@ private ArrayList<HashMap<String, Object>> dataBuoni ;
 private  SimpleAdapter adapter;
 private ArrayList<Monitoraggio> monitoriaggioList = new ArrayList<Monitoraggio>();
 private AlertDialog.Builder alertDialogBuilder;
+private ImageButton buttonData;
+private ImageButton reloadList;
 private boolean logTouch=false;
 private MonitoraggioTable mont;
+private EditText textData;
+final Calendar c = Calendar.getInstance();
+int year = c.get(Calendar.YEAR);
+int month = c.get(Calendar.MONTH);
+int day = c.get(Calendar.DAY_OF_MONTH);
+String[] from={"ev","data","descrizione","cliente","commessa","comune","area"};
+
+int[] to={R.id.ev,R.id.data,R.id.descrizione,R.id.cliente,R.id.commessa,R.id.comune,R.id.area};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -51,39 +68,59 @@ private MonitoraggioTable mont;
 		alertDialogBuilder 		= new AlertDialog.Builder(this);
 	
 	       
-	        dataBuoni = new ArrayList<HashMap<String,Object>>();
-		
-	   
-			   for(int i=0;i<monitoriaggioList.size();i++){
-		           Monitoraggio mtg= monitoriaggioList.get(i);
-		           
-		           HashMap<String,Object> buoniMap=new HashMap<String, Object>();
-		           
-		           buoniMap.put("ev",mtg.getEvaso()); 
-		           buoniMap.put("data", mtg.getData()); 
-		           buoniMap.put("sigla",mtg.getSigla());
-		           buoniMap.put("descrizione",mtg.getDescrizione());
-		           buoniMap.put("cliente",mtg.getCliente());
-		           buoniMap.put("commessa",mtg.getCommessa_n());
-		           buoniMap.put("comune",mtg.getCitta());
-		           buoniMap.put("area",mtg.getArea());
-		           dataBuoni.add(buoniMap); 
-			   		}
-	     String[] from={"ev","data","sigla","descrizione","cliente","commessa","comune","area"};
-	     
-	     int[] to={R.id.ev,R.id.data,R.id.sigla,R.id.descrizione,R.id.cliente,R.id.commessa,R.id.comune,R.id.area};
-	     
-	     adapter =new SimpleAdapter(
-                 getApplicationContext(),
-                 dataBuoni,
-                 R.layout.buono, 
-                 from,
-                 to);
+	       
 	     
 	     listBuoni =  (ListView) findViewById(R.id.buoniListView);
-	     listBuoni.setAdapter(adapter);
+	     buttonData = (ImageButton) findViewById(R.id.buttonData);
+	     reloadList = (ImageButton) findViewById(R.id.reloadList);
+	     textData	= (EditText) findViewById(R.id.labelData);
+	     setListAdapter();
 	     
+	     buttonData.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					
+				        
+					 DatePickerDialog dialogData = new DatePickerDialog(context,
+							new DatePickerDialog.OnDateSetListener() {
+
+								@Override
+								public void onDateSet(DatePicker view,
+										int yearFinsh, int monthOfYear,
+										int dayOfMonth) {
+									// TODO Auto-generated method stub
+									textData.setText("Data: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+yearFinsh );
+									showToast("Ricerca per data...");
+									monitoriaggioList = new ArrayList<Monitoraggio>();
+									monitoriaggioList = mont.selectAllMonitoraggioData(monitoriaggioList,GlobalConstants.dataPerFiltro(yearFinsh,(monthOfYear+1),dayOfMonth));
+									setListAdapter();
+									 year = yearFinsh;
+									 month = monthOfYear;
+									 day = dayOfMonth;
+									  
+									
+								}
+						 
+					 }, year, month, day);
+					 
+					 dialogData.show();
+					 	
+				}
+			});
 	     
+	     reloadList.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if(!textData.getText().toString().equals("")){
+					textData.setText("");
+					monitoriaggioList = new ArrayList<Monitoraggio>();
+					monitoriaggioList = mont.selectAllMonitoraggio(monitoriaggioList);
+					setListAdapter();
+					}
+				}
+	     });
 	     listBuoni.setOnItemClickListener(new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
@@ -103,7 +140,7 @@ private MonitoraggioTable mont;
 					 Intent page_buono= new Intent(context, BuonoActivity.class);
 					 page_buono.putExtra(GlobalConstants.IDBUONO, monitoriaggioList.get(position).getId_monitoraggio());
 					
-				    //  startActivityForResult(page_buono,20);
+				 
 					
 					 startActivity(page_buono);
 					 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -125,6 +162,38 @@ private MonitoraggioTable mont;
 	}
 	
    
+	private void setListAdapter(){
+		
+		 dataBuoni = new ArrayList<HashMap<String,Object>>();
+			
+		   
+		   for(int i=0;i<monitoriaggioList.size();i++){
+	           Monitoraggio mtg= monitoriaggioList.get(i);
+	           
+	           HashMap<String,Object> buoniMap=new HashMap<String, Object>();
+	           
+	           buoniMap.put("ev",mtg.getEvaso()); 
+	           buoniMap.put("data", mtg.getData()); 
+	           buoniMap.put("descrizione",mtg.getDescrizione());
+	           buoniMap.put("cliente",mtg.getCliente());
+	           buoniMap.put("commessa",mtg.getCommessa_n());
+	           buoniMap.put("comune",mtg.getCitta());
+	           buoniMap.put("area",mtg.getArea());
+	           dataBuoni.add(buoniMap); 
+		   		}
+  
+   
+   adapter =new SimpleAdapter(
+           getApplicationContext(),
+           dataBuoni,
+           R.layout.buono, 
+           from,
+           to);
+   
+   listBuoni.setAdapter(adapter);
+		
+	}
+	
 	
 	public void addNewBuono(View view){
 		showToast("Funzionalià ancora non disponibile");
