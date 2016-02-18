@@ -27,14 +27,14 @@ public class MonitoraggioVociTable extends ConnectionDb {
 		
 		while (cursor.moveToNext()) {
 
-		/*	if (cursor.getString(cursor.getColumnIndex("qrcode")) != null
+			if (cursor.getString(cursor.getColumnIndex("qrcode")) != null
 					&& !cursor.getString(cursor.getColumnIndex("qrcode"))
 							.equalsIgnoreCase(GlobalConstants.DISPOSTIVODELETE))
 				count++;
 
 			if (cursor.getString(cursor.getColumnIndex("qrcode")) == null)
 				count++;
-			*/
+			
 			count++;
 		}
 

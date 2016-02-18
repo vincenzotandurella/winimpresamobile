@@ -61,7 +61,7 @@ int[] to={R.id.ev,R.id.data,R.id.descrizione,R.id.cliente,R.id.commessa,R.id.com
 		ab.setTitle(getResources().getString(R.string.listBuoni));
 		ab.setSubtitle(user.getFullName() + " / "+user.getIdUser());
 		getActionBar().setDisplayShowHomeEnabled(false);
-		//logout();
+		
 		
 		mont  = new MonitoraggioTable(context, db);
 		monitoriaggioList = mont.selectAllMonitoraggio(monitoriaggioList);
